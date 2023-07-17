@@ -1,0 +1,70 @@
+.sidebar {
+  width: 23%;
+  background-color: #1f2023;
+  display: flex;
+  flex-direction: column;
+  padding: 4rem 2rem;
+
+  &__profile {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 3rem 4rem;
+    border-radius: 15px;
+    background-color: #121212;
+    color: white;
+    margin-bottom: 3rem;
+  }
+
+  &__profile-photo {
+    width: 8rem;
+  }
+
+  &__name {
+    font-weight: 500;
+    font-size: 1.5rem;
+  }
+
+  &__position {
+    font-weight: 400;
+    font-size: 1.4rem;
+    padding-top: 0.5rem;
+  }
+
+  &__my-projects {
+    text-transform: uppercase;
+    color: white;
+  }
+
+  &__title {
+    font-size: 1.4rem;
+  }
+
+  &__search-area {
+    margin-top: 2rem;
+    display: flex;
+    justify-content: space-between;
+
+    input::placeholder {
+      color: white;
+      font-family: poppins;
+    }
+  }
+
+  &__search-textarea {
+    border: 0;
+    background-color: #28292d;
+    color: white;
+    padding: 1.2rem 2rem;
+    border-radius: 10px;
+    width: 100%;
+    margin-right: 2rem;
+  }
+
+  &__search-button {
+    background-color: #006cff;
+    display: flex;
+    padding: 1.2rem 1.4rem;
+    border-radius: 10px;
+  }
+}

@@ -1,2 +1,7 @@
-.app {
+@use "./styles/partials/resets" as *;
+@use "./styles/partials/responsive" as *;
+
+.app__divide {
+  display: flex;
+  height: 100vh;
 }
