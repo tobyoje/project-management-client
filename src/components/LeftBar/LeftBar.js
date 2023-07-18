@@ -112,7 +112,7 @@ const LeftBar = () => {
                 className="sidebar__project-container--namebox"
                 style={{ backgroundColor: "#4C5FB1" }}
               >
-                M
+                O
               </div>
               <div className="sidebar__project-container--info">
                 <p> Oslo Project</p>
@@ -132,7 +132,7 @@ const LeftBar = () => {
                 className="sidebar__project-container--namebox"
                 style={{ backgroundColor: "#00918E" }}
               >
-                M
+                C
               </div>
               <div className="sidebar__project-container--info">
                 <p> Community Project</p>

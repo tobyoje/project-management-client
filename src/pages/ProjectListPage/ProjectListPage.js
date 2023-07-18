@@ -1,6 +1,11 @@
 const ProjectListPage = () => {
   return <>
-  Project List Page
+   <div className="project">
+        <div className="project__content">
+        Project List Page
+
+        </div>
+      </div>
   </>
 };
 

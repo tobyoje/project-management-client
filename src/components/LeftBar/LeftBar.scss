@@ -1,15 +1,17 @@
 .sidebar {
-  width: 23%;
+  width: 32rem;
   background-color: #1f2023;
   display: flex;
   flex-direction: column;
   padding: 2rem 0rem;
+  position: fixed;
+  height: 100vh;
 
   &__profile {
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    padding: 3rem 4rem;
+    justify-content: center;
+    padding: 3rem 2rem;
     border-radius: 15px;
     background-color: #121212;
     color: white;
@@ -17,7 +19,8 @@
   }
 
   &__profile-photo {
-    width: 8rem;
+    width: 7rem;
+    margin-right: 2rem;
   }
 
   &__name {
@@ -89,7 +92,7 @@
       justify-content: center;
       align-items: center;
       font-size: 2rem;
-      font-weight: 500;
+      font-weight: 400;
       background-color: #d35400;
       width: 4.4rem;
       height: 4.2rem;
@@ -201,11 +204,15 @@
   flex-direction: column;
   padding: 0 2rem;
   margin-top: 3rem;
+  position: absolute;
+  bottom: 2rem;
+  border-top: 0.01px solid rgba(139, 139, 139, 0.2);
+  width: 100%;
 }
 
 .sidebar__menu-container {
   display: flex;
-  margin-bottom: 1.3rem;
+  margin-top: 1.3rem;
   padding: 0;
   color: white;
   letter-spacing: 0.02rem;
