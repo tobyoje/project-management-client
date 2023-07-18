@@ -1,11 +1,19 @@
+@use "../../styles/partials/responsive" as *;
+
 .sidebar {
-  width: 32rem;
+  width: 30rem;
   background-color: #1f2023;
   display: flex;
   flex-direction: column;
   padding: 2rem 0rem;
   position: fixed;
   height: 100vh;
+    z-index: 2;
+
+
+  @include media-widescreen{
+    width: 32rem;
+  }
 
   &__profile {
     display: flex;
