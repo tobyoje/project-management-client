@@ -1,14 +1,12 @@
+import Header from "../../components/Header/Header";
 import "./ProjectPage.scss";
-
 
 const ProjectPage = () => {
   return (
     <>
       <div className="project">
-        <div className="project__content">
-        Main right content
-
-        </div>
+        <Header />
+        <div className="project__content">Project page</div>
       </div>
     </>
   );

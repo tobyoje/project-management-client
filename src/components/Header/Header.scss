@@ -1,0 +1,19 @@
+.header {
+  color: white;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 3rem;
+
+  &__button {
+    background-color: #006cff;
+    padding: 1rem 1.5rem;
+    font-weight: 500;
+    border-radius: 1rem;
+    margin-right: 4rem;
+  }
+
+  &__icon{
+    width: 3rem;
+  }
+}

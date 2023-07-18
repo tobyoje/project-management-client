@@ -1,8 +1,11 @@
 .project {
+    display: flex;
+    flex-direction: column;
   width: 100%;
   background-color: #121212;
-
+  margin-left: 32rem;
   &__content {
-    padding: 100px;
+    padding: 5rem 3rem;
+    color: white;
   }
 }

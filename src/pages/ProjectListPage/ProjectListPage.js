@@ -1,12 +1,15 @@
-const ProjectListPage = () => {
-  return <>
-   <div className="project">
-        <div className="project__content">
-        Project List Page
+import Header from "../../components/Header/Header";
 
-        </div>
+const ProjectListPage = () => {
+  return (
+    <>
+      <div className="project">
+        <Header />
+
+        <div className="project__content">Project List Page</div>
       </div>
-  </>
+    </>
+  );
 };
 
 export default ProjectListPage;
