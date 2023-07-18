@@ -8,12 +8,12 @@ function App() {
   return (
     <div className="app">
       <BrowserRouter>
-      <div className="app__divide">
-        <LeftBar/>
-        <Routes>
-          <Route path="/" element={<ProjectPage />} />
-          <Route path="projects" element={<ProjectListPage />} />
-        </Routes>
+        <div className="app__divide">
+          <LeftBar />
+          <Routes>
+            <Route path="/" element={<ProjectPage />} />
+            <Route path="projects" element={<ProjectListPage />} />
+          </Routes>
         </div>
       </BrowserRouter>
     </div>
