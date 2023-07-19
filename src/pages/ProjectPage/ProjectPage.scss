@@ -1,11 +1,254 @@
+@use "../../styles/partials/responsive" as *;
+
 .project {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
   width: 100%;
   background-color: #121212;
-  margin-left: 32rem;
+  margin-left: 30rem;
+  height: 400rem;
+
+  @include media-widescreen {
+    margin-left: 32rem;
+  }
+
   &__content {
-    padding: 5rem 3rem;
+    padding: 2rem 0;
     color: white;
+    display: flex;
+    flex-direction: column;
+    margin-top: 10rem;
+  }
+
+  &__title-container {
+    display: flex;
+    align-items: center;
+    margin: 0 3rem;
+  }
+
+  &__name-avatar {
+    font-size: 3rem;
+    font-weight: 400;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 6rem;
+    height: 6rem;
+    background-color: #a3a847;
+    margin-right: 2rem;
+    border-radius: 10px;
+  }
+
+  &__name {
+    font-size: 2rem;
+    letter-spacing: 0.05rem;
+  }
+
+  &__menubar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #1f2023;
+    margin: 3rem 3rem;
+    border-radius: 10px;
+
+    ul {
+      display: flex;
+      padding-top: 3rem;
+
+      margin: 0;
+      //   padding: 0;
+    }
+
+    li {
+      list-style: none;
+      margin-right: 4rem;
+      text-transform: uppercase;
+      font-size: 1.4rem;
+      padding-bottom: 3rem;
+      letter-spacing: 0.05rem;
+
+      &:hover {
+        color: #006cff;
+        border-bottom: 2.5px solid #006cff;
+      }
+    }
+
+    &--active {
+      color: #006cff;
+      border-bottom: 2.5px solid #006cff;
+    }
+  }
+
+  &__edit-button {
+    display: flex;
+    align-items: center;
+    background-color: #006cff;
+    padding: 1rem 2.5rem;
+    font-size: 1.4rem;
+    border-radius: 10px 0 0 10px;
+  }
+
+  &__edit-icon {
+    width: 1.8rem;
+    margin-right: 1rem;
+  }
+
+  &__cardview {
+    margin: 0 3rem;
+    display: flex;
+  }
+
+  &__card {
+    background-color: rgba(31, 32, 35, 0.4);
+    width: 30rem;
+    padding-top: 2rem;
+    margin-right: 2rem;
+    border-radius: 2rem;
+
+    @include media-widescreen {
+        width: 50rem;
+        margin-right: 3rem;
+
+  
+    }
+
+  }
+
+  &__card-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-right: 2rem;
+  }
+
+  &__card-label {
+    font-size: 1.4rem;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    margin-right: 3rem;
+    padding: 0.6rem 1.5rem;
+    border-radius: 0 30px 30px 0;
+
+    &--todo {
+      background-color: #006cff;
+    }
+
+    &--progress {
+      background-color: #f3a32f;
+    }
+
+    &--completed {
+      background-color: #009a34;
+    }
+
+    &--icon {
+      background-color: #121212;
+      padding: 1rem;
+      border-radius: 10px;
+    }
+  }
+
+  &__card-counter {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: white;
+    border-radius: 7rem;
+    width: 28px;
+    height: 28px;
+    margin-left: 2rem;
+    font-size: 1.5rem;
+    font-weight: 400;
+
+    &--todo {
+      color: #006cff;
+    }
+
+    &--progress {
+      color: #f3a32f;
+    }
+
+    &--completed {
+      color: #009a34;
+    }
+  }
+
+  &__priority {
+    display: flex;
+    align-items: center;
+
+    border-radius: 5px;
+    padding: 0.3rem 0;
+    margin-bottom: 2rem;
+    width: 6rem;
+    font-size: 1rem;
+    justify-content: center;
+
+    &--high {
+      background-color: rgba(255, 0, 0, 0.12);
+      border: 1px solid #ff0000;
+      color: #ff0000;
+    }
+
+    &--medium {
+      background-color: rgba(243, 163, 47, 0.12);
+      border: 1px solid #f3a32f;
+      color: #f3a32f;
+    }
+
+    &--low {
+        background-color: rgba(0, 108, 255, 0.12);
+        border: 1px solid #006CFF;
+        color: #006CFF;
+      }
+  }
+
+  &__task-container {
+    margin: 2rem 2rem;
+    background-color: rgba(31, 32, 35, 0.60);
+    padding: 2rem;
+    border-radius: 10px;
+    position: relative;
+
+    &:hover{
+        background-color: #1f2023;
+    }
+  }
+
+  &__task-title {
+    margin-bottom: 4rem;
+    font-size: 1.4rem;
+    &--done{
+        text-decoration: line-through;
+    }
+  }
+
+  &__grid-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: absolute;
+    bottom: 1rem;
+    right: 2rem;
+    left: 2rem;
+  }
+
+  &__grid-timecontainer {
+    display: flex;
+    align-items: center;
+  }
+
+  &__grid-time {
+    font-size: 1.1rem;
+  }
+
+  &__grid-icon {
+    width: 2rem;
+
+    &--space {
+      margin-right: 1rem;
+    }
   }
 }

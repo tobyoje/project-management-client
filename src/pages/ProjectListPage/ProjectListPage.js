@@ -86,16 +86,6 @@ const ProjectListPage = () => {
               </div>
             </div>
 
-
-
-
-
-
-
-
-
-
-
             <div className="projectlist__grid-item">
               <p className="projectlist__grid-title">Oslo Project</p>
               <p className="projectlist__grid-desc">
@@ -223,8 +213,6 @@ const ProjectListPage = () => {
                 </div>
               </div>
             </div>
-
-
           </div>
         </div>
       </div>
