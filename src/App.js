@@ -3,6 +3,7 @@ import "./App.scss";
 import LeftBar from "./components/LeftBar/LeftBar";
 import ProjectPage from "./pages/ProjectPage/ProjectPage";
 import ProjectListPage from "./pages/ProjectListPage/ProjectListPage";
+import AddProject from "./pages/AddProject/AddProject";
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
           <Routes>
             <Route path="/" element={<ProjectPage />} />
             <Route path="projects" element={<ProjectListPage />} />
+            <Route path="new-project" element={<AddProject />} />
           </Routes>
         </div>
       </BrowserRouter>

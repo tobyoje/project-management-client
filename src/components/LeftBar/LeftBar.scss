@@ -8,10 +8,9 @@
   padding: 2rem 0rem;
   position: fixed;
   height: 100vh;
-    z-index: 2;
+  z-index: 2;
 
-
-  @include media-widescreen{
+  @include media-widescreen {
     width: 32rem;
   }
 

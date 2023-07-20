@@ -1,11 +1,14 @@
 import "./Header.scss";
 import notficationICON from "../../assets/icons/nots.svg";
+import { Link } from "react-router-dom";
 
 const Header = () => {
   return (
     <>
       <div className="header">
-        <div className="header__button">Create New Project</div>
+        <Link to="/new-project">
+          <div className="header__button">Create New Project</div>
+        </Link>
 
         <img
           className="header__icon"
