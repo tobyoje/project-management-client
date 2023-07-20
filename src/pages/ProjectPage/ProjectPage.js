@@ -6,7 +6,7 @@ import ProjectOverview from "../../components/ProjectOverview/ProjectOverview";
 import ProjectListView from "../../components/ProjectListView/ProjectListView";
 import editICON from "../../assets/icons/edit.svg";
 
-const ProjectPage = () => {
+const ProjectPage = ({ setAddTaskPopup, setTaskType }) => {
   const [menuTab, setMenuTab] = useState("overview");
 
   const onChangeToOverview = () => {
@@ -71,7 +71,12 @@ const ProjectPage = () => {
           </div>
           {menuTab == "overview" && <ProjectOverview />}
 
-          {menuTab == "gridview" && <ProjectGridView />}
+          {menuTab == "gridview" && (
+            <ProjectGridView
+              setAddTaskPopup={setAddTaskPopup}
+              setTaskType={setTaskType}
+            />
+          )}
 
           {menuTab == "listview" && <ProjectListView />}
         </div>

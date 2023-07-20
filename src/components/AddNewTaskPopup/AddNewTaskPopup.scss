@@ -1,18 +1,43 @@
-.project-add {
-  margin: 0 3rem;
+.popup-container {
+  height: 100vh;
+  width: 100vw;
+  background-color: rgba(57, 57, 57, 0.81);
+  position: absolute;
   display: flex;
-  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 3;
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+    background-color: #1f2023;
+    height: 67rem;
+    border-radius: 10px;
+    color: white;
+    padding: 5rem;
+  }
+
+  &__content-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    &--icon {
+      width: 2.5rem;
+    }
+  }
 
   &__title {
     font-size: 2rem;
-    margin-bottom: 4rem;
   }
 
   &__form {
     font-family: poppins;
     letter-spacing: 0.02rem;
-
     display: flex;
+    flex-direction: column;
+    margin-top: 4rem;
 
     label {
       margin-bottom: 1.5rem;
@@ -38,26 +63,20 @@
       }
     }
 
-    &--leftcol {
+    &--textinfo {
       display: flex;
       flex-direction: column;
-      margin-right: 10rem;
-
-      input {
-        width: 65rem;
-      }
 
       textarea {
         font-family: poppins;
         letter-spacing: 0.02rem;
-
         border: 0;
         background-color: #171819;
         color: white;
         padding: 1.2rem 2rem;
         border-radius: 10px;
         margin-bottom: 2rem;
-        height: 30rem;
+        height: 10rem;
 
         &:focus {
           border: 0;
@@ -70,13 +89,9 @@
       }
     }
 
-    &--rightcol {
+    &--other-info {
       display: flex;
       flex-direction: column;
-
-      input {
-        width: 28rem;
-      }
     }
 
     &--submit {
@@ -98,7 +113,31 @@
     }
   }
 
+  &__date {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 1rem;
+
+    &--col {
+      display: flex;
+      flex-direction: column;
+    }
+  }
+
+  input[type="datetime-local"] {
+    color: white;
+    font-family: poppins;
+    letter-spacing: 0.02rem;
+    // width: 21rem;
+    margin-right: 1rem;
+
+    &::-webkit-calendar-picker-indicator {
+      filter: invert(1);
+    }
+  }
+
   &__pr-label {
+    display: flex;
     input[type="radio"]:checked + label.priority-high {
       background-color: #ff0000;
     }
@@ -119,8 +158,9 @@
       border-radius: 5px;
       margin: 0;
       margin-bottom: 2rem;
-      width: 15rem;
-      height: 4rem;
+      width: 8rem;
+      height: 3rem;
+      margin-right: 2rem;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -156,16 +196,4 @@
       }
     }
   }
-
-  input[type="datetime-local"] {
-    color: white;
-    font-family: poppins;
-    letter-spacing: 0.02rem;
-  
-    &::-webkit-calendar-picker-indicator {
-      filter: invert(1);
-    }
-  }
-  
 }
-
