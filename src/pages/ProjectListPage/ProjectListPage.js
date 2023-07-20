@@ -8,8 +8,20 @@ import favoriteICON from "../../assets/icons/favorite.svg";
 import xfavoriteICON from "../../assets/icons/x-favorite.svg";
 
 import optionsICON from "../../assets/icons/options.svg";
+import { useState } from "react";
 
 const ProjectListPage = () => {
+  const [favIcon, setFavIcon] = useState(favoriteICON);
+
+  const onChnageFavIcon = () => {
+    if (favIcon == favoriteICON) {
+      setFavIcon(xfavoriteICON);
+    }
+    if (favIcon == xfavoriteICON) {
+      setFavIcon(favoriteICON);
+    }
+  };
+
   return (
     <>
       <div className="projectlist">
@@ -73,8 +85,9 @@ const ProjectListPage = () => {
 
                 <div>
                   <img
+                    onClick={onChnageFavIcon}
                     className="projectlist__grid-icon projectlist__grid-icon--space"
-                    src={favoriteICON}
+                    src={favIcon}
                     alt="Favorite Icon"
                   />
                   <img
@@ -105,8 +118,9 @@ const ProjectListPage = () => {
 
                 <div>
                   <img
+                    onClick={onChnageFavIcon}
                     className="projectlist__grid-icon projectlist__grid-icon--space"
-                    src={favoriteICON}
+                    src={favIcon}
                     alt="Favorite Icon"
                   />
                   <img
@@ -137,8 +151,9 @@ const ProjectListPage = () => {
 
                 <div>
                   <img
+                    onClick={onChnageFavIcon}
                     className="projectlist__grid-icon projectlist__grid-icon--space"
-                    src={xfavoriteICON}
+                    src={favIcon}
                     alt="Favorite Icon"
                   />
                   <img
@@ -169,8 +184,9 @@ const ProjectListPage = () => {
 
                 <div>
                   <img
+                    onClick={onChnageFavIcon}
                     className="projectlist__grid-icon projectlist__grid-icon--space"
-                    src={favoriteICON}
+                    src={favIcon}
                     alt="Favorite Icon"
                   />
                   <img
@@ -201,8 +217,9 @@ const ProjectListPage = () => {
 
                 <div>
                   <img
+                    onClick={onChnageFavIcon}
                     className="projectlist__grid-icon projectlist__grid-icon--space"
-                    src={xfavoriteICON}
+                    src={favIcon}
                     alt="Favorite Icon"
                   />
                   <img
