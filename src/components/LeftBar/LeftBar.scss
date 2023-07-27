@@ -58,10 +58,24 @@
     display: flex;
     justify-content: space-between;
 
+    input {
+      &:active {
+        border: 0;
+      }
+
+      &:focus {
+        border: 0;
+        outline: none;
+      }
+
+    }
+
     input::placeholder {
       color: white;
       font-family: poppins;
       letter-spacing: 0.02rem;
+
+      
     }
   }
 
