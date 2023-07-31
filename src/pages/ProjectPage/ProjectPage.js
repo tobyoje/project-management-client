@@ -1,12 +1,17 @@
 import Header from "../../components/Header/Header";
 import "./ProjectPage.scss";
 import ProjectGridView from "../../components/ProjectGridView/ProjectGridView";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ProjectOverview from "../../components/ProjectOverview/ProjectOverview";
 import ProjectListView from "../../components/ProjectListView/ProjectListView";
 import editICON from "../../assets/icons/edit.svg";
+import axios from "axios";
+import LeftBar from "../../components/LeftBar/LeftBar";
+import { useNavigate } from "react-router-dom";
 
 const ProjectPage = ({ setAddTaskPopup, setTaskType }) => {
+  const navigate = useNavigate();
+  const [userData, setUserData] = useState(null);
   const [menuTab, setMenuTab] = useState("overview");
 
   const onChangeToOverview = () => {
@@ -20,8 +25,40 @@ const ProjectPage = ({ setAddTaskPopup, setTaskType }) => {
     setMenuTab("listview");
   };
 
+  useEffect(() => {
+    const token = sessionStorage.getItem("token");
+    const userId = sessionStorage.getItem("user_id");
+
+    if (!token && !userId) {
+      navigate("/login");
+    }
+
+    axios
+      .get(`http://localhost:8080/api/user/${userId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`, // Attach the token in the headers for authentication
+        },
+      })
+      .then((response) => {
+        setUserData(response.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching user information:", error);
+      });
+  }, []);
+  if (!userData) {
+    return (
+      <div>
+        <p>loading...</p>
+      </div>
+    );
+  }
+  console.log(userData);
+
   return (
     <>
+      <LeftBar userData={userData} />
+
       <div className="project">
         <Header />
         <div className="project__content">

@@ -4,13 +4,14 @@ import LeftBar from "./components/LeftBar/LeftBar";
 import ProjectPage from "./pages/ProjectPage/ProjectPage";
 import ProjectListPage from "./pages/ProjectListPage/ProjectListPage";
 import AddProject from "./pages/AddProject/AddProject";
-import { useState } from "react";
+import React, { useEffect, useState } from "react";
 import AddNewTaskPopup from "./components/AddNewTaskPopup/AddNewTaskPopup";
+import axios from "axios";
+import LoginPage from "./pages/LoginPage/LoginPage";
 
 function App() {
   const [addTaskPopup, setAddTaskPopup] = useState(false);
   const [taskType, setTaskType] = useState("");
-
 
   return (
     <div className="app">
@@ -24,19 +25,30 @@ function App() {
             />
           ) : null}
 
-          <LeftBar />
           <Routes>
             <Route
-              path="/"
+              path="/*"
               element={
-                <ProjectPage
-                  setAddTaskPopup={setAddTaskPopup}
-                  setTaskType={setTaskType}
-                />
+                <React.Fragment>
+                  {/* <LeftBar /> */}
+                  <Routes>
+                    <Route
+                      path="/"
+                      element={
+                        <ProjectPage
+                          setAddTaskPopup={setAddTaskPopup}
+                          setTaskType={setTaskType}
+                        />
+                      }
+                    />
+                    <Route path="projects" element={<ProjectListPage />} />
+                    <Route path="new-project" element={<AddProject />} />
+                  </Routes>
+                </React.Fragment>
               }
             />
-            <Route path="projects" element={<ProjectListPage />} />
-            <Route path="new-project" element={<AddProject />} />
+
+            <Route path="/login" element={<LoginPage />} />
           </Routes>
         </div>
       </BrowserRouter>

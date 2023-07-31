@@ -1,4 +1,9 @@
+import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import axios from "axios";
+
 import "./ProjectListPage.scss";
+
 import Header from "../../components/Header/Header";
 import gridViewICON from "../../assets/icons/grid.svg";
 import listViewICON from "../../assets/icons/list.svg";
@@ -8,9 +13,11 @@ import favoriteICON from "../../assets/icons/favorite.svg";
 import xfavoriteICON from "../../assets/icons/x-favorite.svg";
 
 import optionsICON from "../../assets/icons/options.svg";
-import { useState } from "react";
+import LeftBar from "../../components/LeftBar/LeftBar";
 
 const ProjectListPage = () => {
+  const navigate = useNavigate();
+  const [userData, setUserData] = useState(null);
   const [favIcon, setFavIcon] = useState(favoriteICON);
 
   const onChnageFavIcon = () => {
@@ -22,8 +29,39 @@ const ProjectListPage = () => {
     }
   };
 
+  useEffect(() => {
+    const token = sessionStorage.getItem("token");
+    const userId = sessionStorage.getItem("user_id");
+
+    if (!token && !userId) {
+      navigate("/login");
+    }
+
+    axios
+      .get(`http://localhost:8080/api/user/${userId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`, // Attach the token in the headers for authentication
+        },
+      })
+      .then((response) => {
+        setUserData(response.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching user information:", error);
+      });
+  }, []);
+  if (!userData) {
+    return (
+      <div>
+        <p>loading...</p>
+      </div>
+    );
+  }
+  // console.log(userData);
+
   return (
     <>
+                <LeftBar userData={userData}/>
       <div className="projectlist">
         <Header />
 
