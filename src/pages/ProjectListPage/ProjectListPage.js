@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
 
@@ -18,16 +18,30 @@ import LeftBar from "../../components/LeftBar/LeftBar";
 const ProjectListPage = () => {
   const navigate = useNavigate();
   const [userData, setUserData] = useState(null);
-  const [favIcon, setFavIcon] = useState(favoriteICON);
+  const [priorityColor, setPriorityColor] = useState("");
 
-  const onChnageFavIcon = () => {
-    if (favIcon == favoriteICON) {
-      setFavIcon(xfavoriteICON);
-    }
-    if (favIcon == xfavoriteICON) {
-      setFavIcon(favoriteICON);
-    }
+  // const [favIcon, setFavIcon] = useState();
+  const [timeDifference, setTimeDifference] = useState("");
+
+  // const onChangeFavIcon = () => {
+  //   if (favoriteICON) {
+  //     setFavIcon(xfavoriteICON);
+  //   }
+  //   if (xfavoriteICON) {
+  //     setFavIcon(favoriteICON);
+  //   }
+  // };
+
+  const calculateTimeDifference = (startDate, endDate) => {
+    const startDateObj = new Date(startDate);
+    const endDateObj = new Date(endDate);
+    const timeDifference = endDateObj.getTime() - startDateObj.getTime();
+    const days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+    return { days };
   };
+
+
+
 
   useEffect(() => {
     const token = sessionStorage.getItem("token");
@@ -57,11 +71,10 @@ const ProjectListPage = () => {
       </div>
     );
   }
-  // console.log(userData);
 
   return (
     <>
-                <LeftBar userData={userData}/>
+      <LeftBar userData={userData} />
       <div className="projectlist">
         <Header />
 
@@ -70,7 +83,7 @@ const ProjectListPage = () => {
             <p className="projectlist__counter--title">
               Total Projects -&nbsp;
             </p>
-            <p className="projectlist__counter--number">54</p>
+            <p className="projectlist__counter--number">{userData.projects.length}</p>
           </div>
 
           <div className="projectlist__sort">
@@ -95,179 +108,91 @@ const ProjectListPage = () => {
           </div>
 
           <div className="projectlist__grid">
-            <div className="projectlist__grid-item projectlist__grid-item--new">
-              <img
-                className="projectlist__grid-item--icon"
-                src={addICON}
-                alt="Add Icon"
-              />
-              <p>New Project</p>
-            </div>
-
-            <div className="projectlist__grid-item">
-              <p className="projectlist__grid-title">Oslo Project</p>
-              <p className="projectlist__grid-desc">
-                Our community project seeks to revitalize local parks by
-                organizing regular clean-up and beautification events ...
-              </p>
-              <div className="projectlist__grid-priority">High</div>
-              <div className="projectlist__grid-bottom">
-                <div className="projectlist__grid-timecontainer">
-                  <img
-                    className="projectlist__grid-icon projectlist__grid-icon--space"
-                    src={timeICON}
-                    alt="Time Icon"
-                  />
-                  <p className="projectlist__grid-time">10d</p>
-                </div>
-
-                <div>
-                  <img
-                    onClick={onChnageFavIcon}
-                    className="projectlist__grid-icon projectlist__grid-icon--space"
-                    src={favIcon}
-                    alt="Favorite Icon"
-                  />
-                  <img
-                    className="projectlist__grid-icon"
-                    src={optionsICON}
-                    alt="Options Icon"
-                  />
-                </div>
+            <Link to={"/new-project"}>
+              <div className="projectlist__grid-item projectlist__grid-item--new">
+                <img
+                  className="projectlist__grid-item--icon"
+                  src={addICON}
+                  alt="Add Icon"
+                />
+                <p>New Project</p>
               </div>
-            </div>
+            </Link>
 
-            <div className="projectlist__grid-item">
-              <p className="projectlist__grid-title">Oslo Project</p>
-              <p className="projectlist__grid-desc">
-                Our community project seeks to revitalize local parks by
-                organizing regular clean-up and beautification events ...
-              </p>
-              <div className="projectlist__grid-priority">High</div>
-              <div className="projectlist__grid-bottom">
-                <div className="projectlist__grid-timecontainer">
-                  <img
-                    className="projectlist__grid-icon projectlist__grid-icon--space"
-                    src={timeICON}
-                    alt="Time Icon"
-                  />
-                  <p className="projectlist__grid-time">10d</p>
-                </div>
+            {userData.projects.length === 0 ? (
+              <p>No projects</p>
+            ) : (
+              <>
+                {userData.projects.map((projectItem) => (
+                  <div
+                    className="projectlist__grid-item"
+                    key={projectItem.project_id}
+                  >
+                    <p className="projectlist__grid-title">
+                      {projectItem.project_name}
+                    </p>
+                    <p className="projectlist__grid-desc">
+                      {`${projectItem.project_description.substring(
+                        0,
+                        110
+                      )} ...`}
+                    </p>
+                    <div
+                      className={`projectlist__grid-priority ${
+                        projectItem.project_priority === "High"
+                          ? "projectlist__grid-priority--high"
+                          : ""
+                      } ${
+                        projectItem.project_priority === "Low"
+                          ? "projectlist__grid-priority--low"
+                          : ""
+                      } ${
+                        projectItem.project_priority === "Medium"
+                          ? "projectlist__grid-priority--medium"
+                          : ""
+                      } `}
+                    >
+                      {projectItem.project_priority}
+                    </div>
+                    <div className="projectlist__grid-bottom">
+                      <div className="projectlist__grid-timecontainer">
+                        <img
+                          className="projectlist__grid-icon projectlist__grid-icon--space"
+                          src={timeICON}
+                          alt="Time Icon"
+                        />
+                        <p className="projectlist__grid-time">
+                          {`${
+                            calculateTimeDifference(
+                              projectItem.project_startdate,
+                              projectItem.project_enddate
+                            ).days
+                          }d left`}
+                        </p>
+                      </div>
 
-                <div>
-                  <img
-                    onClick={onChnageFavIcon}
-                    className="projectlist__grid-icon projectlist__grid-icon--space"
-                    src={favIcon}
-                    alt="Favorite Icon"
-                  />
-                  <img
-                    className="projectlist__grid-icon"
-                    src={optionsICON}
-                    alt="Options Icon"
-                  />
-                </div>
-              </div>
-            </div>
-
-            <div className="projectlist__grid-item">
-              <p className="projectlist__grid-title">Oslo Project</p>
-              <p className="projectlist__grid-desc">
-                Our community project seeks to revitalize local parks by
-                organizing regular clean-up and beautification events ...
-              </p>
-              <div className="projectlist__grid-priority">High</div>
-              <div className="projectlist__grid-bottom">
-                <div className="projectlist__grid-timecontainer">
-                  <img
-                    className="projectlist__grid-icon projectlist__grid-icon--space"
-                    src={timeICON}
-                    alt="Time Icon"
-                  />
-                  <p className="projectlist__grid-time">10d</p>
-                </div>
-
-                <div>
-                  <img
-                    onClick={onChnageFavIcon}
-                    className="projectlist__grid-icon projectlist__grid-icon--space"
-                    src={favIcon}
-                    alt="Favorite Icon"
-                  />
-                  <img
-                    className="projectlist__grid-icon"
-                    src={optionsICON}
-                    alt="Options Icon"
-                  />
-                </div>
-              </div>
-            </div>
-
-            <div className="projectlist__grid-item">
-              <p className="projectlist__grid-title">Oslo Project</p>
-              <p className="projectlist__grid-desc">
-                Our community project seeks to revitalize local parks by
-                organizing regular clean-up and beautification events ...
-              </p>
-              <div className="projectlist__grid-priority">High</div>
-              <div className="projectlist__grid-bottom">
-                <div className="projectlist__grid-timecontainer">
-                  <img
-                    className="projectlist__grid-icon projectlist__grid-icon--space"
-                    src={timeICON}
-                    alt="Time Icon"
-                  />
-                  <p className="projectlist__grid-time">10d</p>
-                </div>
-
-                <div>
-                  <img
-                    onClick={onChnageFavIcon}
-                    className="projectlist__grid-icon projectlist__grid-icon--space"
-                    src={favIcon}
-                    alt="Favorite Icon"
-                  />
-                  <img
-                    className="projectlist__grid-icon"
-                    src={optionsICON}
-                    alt="Options Icon"
-                  />
-                </div>
-              </div>
-            </div>
-
-            <div className="projectlist__grid-item">
-              <p className="projectlist__grid-title">Oslo Project</p>
-              <p className="projectlist__grid-desc">
-                Our community project seeks to revitalize local parks by
-                organizing regular clean-up and beautification events ...
-              </p>
-              <div className="projectlist__grid-priority">High</div>
-              <div className="projectlist__grid-bottom">
-                <div className="projectlist__grid-timecontainer">
-                  <img
-                    className="projectlist__grid-icon projectlist__grid-icon--space"
-                    src={timeICON}
-                    alt="Time Icon"
-                  />
-                  <p className="projectlist__grid-time">10d</p>
-                </div>
-
-                <div>
-                  <img
-                    onClick={onChnageFavIcon}
-                    className="projectlist__grid-icon projectlist__grid-icon--space"
-                    src={favIcon}
-                    alt="Favorite Icon"
-                  />
-                  <img
-                    className="projectlist__grid-icon"
-                    src={optionsICON}
-                    alt="Options Icon"
-                  />
-                </div>
-              </div>
-            </div>
+                      <div>
+                        <img
+                          // onClick={onChangeFavIcon}
+                          className="projectlist__grid-icon projectlist__grid-icon--space"
+                          src={
+                            projectItem.favorite === 1
+                              ? favoriteICON
+                              : xfavoriteICON
+                          }
+                          alt="Favorite Icon"
+                        />
+                        <img
+                          className="projectlist__grid-icon"
+                          src={optionsICON}
+                          alt="Options Icon"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </>
+            )}
           </div>
         </div>
       </div>

@@ -119,13 +119,31 @@
 
   &__grid-priority {
     margin-top: 2rem;
-    background-color: rgba(255, 0, 0, 0.12);
-    border: 1px solid #ff0000;
+    // background-color: rgba(255, 0, 0, 0.12);
+    // border: 1px solid #ff0000;
     border-radius: 0.5rem;
     padding: 0.3rem 2rem;
-    color: #ff0000;
+    // color: #ff0000;
     font-size: 1.2rem;
     font-weight: 300;
+
+     &--high {
+      background-color: rgba(255, 0, 0, 0.12);
+      border: 1px solid #ff0000;
+      color: #ff0000;
+    }
+
+    &--medium {
+      background-color: rgba(243, 163, 47, 0.12);
+      border: 1px solid #f3a32f;
+      color: #f3a32f;
+    }
+
+    &--low {
+        background-color: rgba(0, 108, 255, 0.12);
+        border: 1px solid #006CFF;
+        color: #006CFF;
+      }
   }
 
   &__grid-bottom {
