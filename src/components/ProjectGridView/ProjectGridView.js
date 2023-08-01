@@ -3,7 +3,7 @@ import timeICON from "../../assets/icons/time.svg";
 import optionsICON from "../../assets/icons/options.svg";
 import { useState } from "react";
 import AddNewTaskPopup from "../AddNewTaskPopup/AddNewTaskPopup";
-const ProjectGridView = ({ setAddTaskPopup, setTaskType }) => {
+const ProjectGridView = ({ projectData, setAddTaskPopup, setTaskType }) => {
   const openAddTaskTodo = () => {
     setAddTaskPopup(true);
     setTaskType('"To Do"');
@@ -19,6 +19,50 @@ const ProjectGridView = ({ setAddTaskPopup, setTaskType }) => {
     setTaskType('"Completed"');
   };
 
+  console.log(projectData.tasks);
+
+
+  const calculateTimeDifference = (startDate, endDate) => {
+    const startDateObj = new Date(startDate);
+    const endDateObj = new Date(endDate);
+    const timeDifference = endDateObj.getTime() - startDateObj.getTime();
+    const days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+    return { days };
+  };
+
+
+  projectData.tasks.sort((a, b) => {
+    if (a.task_id !== b.task_id) {
+      return a.task_id - b.task_id;
+    } else {
+      return a.task_category.localeCompare(b.task_category);
+    }
+  });
+
+  let completedTasks = [];
+  let todoTasks = [];
+  let inProgressTasks = [];
+
+  for (const task of projectData.tasks) {
+    switch (task.task_category) {
+      case "Completed":
+        completedTasks.push(task);
+        break;
+      case "To Do":
+        todoTasks.push(task);
+        break;
+      case "In Progress":
+        inProgressTasks.push(task);
+        break;
+      default:
+        break;
+    }
+  }
+
+  console.log("Completed Tasks:", completedTasks);
+  console.log("To Do Tasks:", todoTasks);
+  console.log("In Progress Tasks:", inProgressTasks);
+
   return (
     <>
       <div className="project__view">
@@ -29,7 +73,7 @@ const ProjectGridView = ({ setAddTaskPopup, setTaskType }) => {
             <div className="project__card-label project__card-label--todo">
               <p>To Do</p>
               <div className="project__card-counter project__card-counter--todo">
-                3
+                {todoTasks.length}
               </div>
             </div>
             <div onClick={openAddTaskTodo}>
@@ -40,87 +84,53 @@ const ProjectGridView = ({ setAddTaskPopup, setTaskType }) => {
               />
             </div>
           </div>
-
-          <div className="project__task-container">
-            <div className="project__priority project__priority--medium">
-              Medium
-            </div>
-
-            <div className="project__task-title">Review with designers</div>
-
-            <div className="project__grid-bottom">
-              <div className="project__grid-timecontainer">
-                <img
-                  className="project__grid-icon project__grid-icon--space"
-                  src={timeICON}
-                  alt="Time Icon"
-                />
-                <p className="project__grid-time">10d</p>
+          {todoTasks.map((todoTask) => (
+            <div className="project__task-container">
+              <div
+                className={`project__priority ${
+                  todoTask.task_priority === "High"
+                    ? "project__priority--high"
+                    : ""
+                } ${
+                  todoTask.task_priority === "Low"
+                    ? "project__priority--low"
+                    : ""
+                } ${
+                  todoTask.task_priority === "Medium"
+                    ? "project__priority--medium"
+                    : ""
+                } `}
+              >
+                {todoTask.task_priority}
               </div>
 
-              <div>
-                <img
-                  className="project__grid-icon"
-                  src={optionsICON}
-                  alt="Options Icon"
-                />
+              <div className="project__task-title">{todoTask.task_name}</div>
+
+              <div className="project__grid-bottom">
+                <div className="project__grid-timecontainer">
+                  <img
+                    className="project__grid-icon project__grid-icon--space"
+                    src={timeICON}
+                    alt="Time Icon"
+                  />
+                  <p className="project__grid-time">{`${
+                            calculateTimeDifference(
+                              todoTask.task_startdate,
+                              todoTask.task_enddate
+                            ).days
+                          }d left`}</p>
+                </div>
+
+                <div>
+                  <img
+                    className="project__grid-icon"
+                    src={optionsICON}
+                    alt="Options Icon"
+                  />
+                </div>
               </div>
             </div>
-          </div>
-
-          <div className="project__task-container">
-            <div className="project__priority project__priority--high">
-              High
-            </div>
-
-            <div className="project__task-title">
-              Meeting with frontend developers
-            </div>
-
-            <div className="project__grid-bottom">
-              <div className="project__grid-timecontainer">
-                <img
-                  className="project__grid-icon project__grid-icon--space"
-                  src={timeICON}
-                  alt="Time Icon"
-                />
-                <p className="project__grid-time">10d</p>
-              </div>
-
-              <div>
-                <img
-                  className="project__grid-icon"
-                  src={optionsICON}
-                  alt="Options Icon"
-                />
-              </div>
-            </div>
-          </div>
-
-          <div className="project__task-container">
-            <div className="project__priority project__priority--low">Low</div>
-
-            <div className="project__task-title">Setup user database</div>
-
-            <div className="project__grid-bottom">
-              <div className="project__grid-timecontainer">
-                <img
-                  className="project__grid-icon project__grid-icon--space"
-                  src={timeICON}
-                  alt="Time Icon"
-                />
-                <p className="project__grid-time">10d</p>
-              </div>
-
-              <div>
-                <img
-                  className="project__grid-icon"
-                  src={optionsICON}
-                  alt="Options Icon"
-                />
-              </div>
-            </div>
-          </div>
+          ))}
         </div>
 
         {/* Inprogress here */}
@@ -130,7 +140,7 @@ const ProjectGridView = ({ setAddTaskPopup, setTaskType }) => {
             <div className="project__card-label project__card-label--progress ">
               <p>In Progress</p>
               <div className="project__card-counter project__card-counter--progress">
-                1
+                {inProgressTasks.length}
               </div>
             </div>
             <div onClick={openAddTaskProgress}>
@@ -141,33 +151,55 @@ const ProjectGridView = ({ setAddTaskPopup, setTaskType }) => {
               />
             </div>
           </div>
-
-          <div className="project__task-container">
-            <div className="project__priority project__priority--high">
-              High
-            </div>
-
-            <div className="project__task-title">Create HF Designs for app</div>
-
-            <div className="project__grid-bottom">
-              <div className="project__grid-timecontainer">
-                <img
-                  className="project__grid-icon project__grid-icon--space"
-                  src={timeICON}
-                  alt="Time Icon"
-                />
-                <p className="project__grid-time">10d</p>
+          {inProgressTasks.map((inProgressTask) => (
+            <div className="project__task-container">
+              <div
+                className={`project__priority ${
+                  inProgressTask.task_priority === "High"
+                    ? "project__priority--high"
+                    : ""
+                } ${
+                  inProgressTask.task_priority === "Low"
+                    ? "project__priority--low"
+                    : ""
+                } ${
+                  inProgressTask.task_priority === "Medium"
+                    ? "project__priority--medium"
+                    : ""
+                } `}
+              >
+                {inProgressTask.task_priority}
               </div>
 
-              <div>
-                <img
-                  className="project__grid-icon"
-                  src={optionsICON}
-                  alt="Options Icon"
-                />
+              <div className="project__task-title">
+                {inProgressTask.task_name}
+              </div>
+
+              <div className="project__grid-bottom">
+                <div className="project__grid-timecontainer">
+                  <img
+                    className="project__grid-icon project__grid-icon--space"
+                    src={timeICON}
+                    alt="Time Icon"
+                  />
+                  <p className="project__grid-time">{`${
+                            calculateTimeDifference(
+                              inProgressTask.task_startdate,
+                              inProgressTask.task_enddate
+                            ).days
+                          }d left`}</p>
+                </div>
+
+                <div>
+                  <img
+                    className="project__grid-icon"
+                    src={optionsICON}
+                    alt="Options Icon"
+                  />
+                </div>
               </div>
             </div>
-          </div>
+          ))}
         </div>
 
         {/* Completed tab */}
@@ -176,7 +208,7 @@ const ProjectGridView = ({ setAddTaskPopup, setTaskType }) => {
             <div className="project__card-label project__card-label--completed">
               <p>Completed</p>
               <div className="project__card-counter project__card-counter--completed">
-                2
+                {completedTasks.length}
               </div>
             </div>
             <div onClick={openAddTaskCompleted}>
@@ -188,61 +220,55 @@ const ProjectGridView = ({ setAddTaskPopup, setTaskType }) => {
             </div>
           </div>
 
-          <div className="project__task-container">
-            <div className="project__priority project__priority--low ">Low</div>
-
-            <div className="project__task-title project__task-title--done">
-              Meeting about colors
-            </div>
-
-            <div className="project__grid-bottom">
-              <div className="project__grid-timecontainer">
-                <img
-                  className="project__grid-icon project__grid-icon--space"
-                  src={timeICON}
-                  alt="Time Icon"
-                />
-                <p className="project__grid-time">10d</p>
+          {completedTasks.map((completedTask) => (
+            <div className="project__task-container">
+              <div
+                className={`project__priority ${
+                  completedTask.task_priority === "High"
+                    ? "project__priority--high"
+                    : ""
+                } ${
+                  completedTask.task_priority === "Low"
+                    ? "project__priority--low"
+                    : ""
+                } ${
+                  completedTask.task_priority === "Medium"
+                    ? "project__priority--medium"
+                    : ""
+                } `}
+              >
+                {completedTask.task_priority}
               </div>
 
-              <div>
-                <img
-                  className="project__grid-icon"
-                  src={optionsICON}
-                  alt="Options Icon"
-                />
-              </div>
-            </div>
-          </div>
-
-          <div className="project__task-container">
-            <div className="project__priority project__priority--medium">
-              Medium
-            </div>
-
-            <div className="project__task-title project__task-title--done">
-              Make wireframes
-            </div>
-
-            <div className="project__grid-bottom">
-              <div className="project__grid-timecontainer">
-                <img
-                  className="project__grid-icon project__grid-icon--space"
-                  src={timeICON}
-                  alt="Time Icon"
-                />
-                <p className="project__grid-time">10d</p>
+              <div className="project__task-title project__task-title--done">
+                {completedTask.task_name}
               </div>
 
-              <div>
-                <img
-                  className="project__grid-icon"
-                  src={optionsICON}
-                  alt="Options Icon"
-                />
+              <div className="project__grid-bottom">
+                <div className="project__grid-timecontainer">
+                  <img
+                    className="project__grid-icon project__grid-icon--space"
+                    src={timeICON}
+                    alt="Time Icon"
+                  />
+                  <p className="project__grid-time"> {`${
+                            calculateTimeDifference(
+                              completedTask.task_startdate,
+                              completedTask.task_enddate
+                            ).days
+                          }d left`}</p>
+                </div>
+
+                <div>
+                  <img
+                    className="project__grid-icon"
+                    src={optionsICON}
+                    alt="Options Icon"
+                  />
+                </div>
               </div>
             </div>
-          </div>
+          ))}
         </div>
       </div>
     </>

@@ -21,14 +21,14 @@
     flex-direction: column;
     margin-top: 4rem;
 
-    &--field{
-        display: flex;
-        flex-direction: column;
+    &--field {
+      display: flex;
+      flex-direction: column;
     }
 
-    button{
-        border: 0;
-        color: white;
+    button {
+      border: 0;
+      color: white;
     }
 
     label {
@@ -58,8 +58,8 @@
       &:invalid {
         border: 1px solid red;
       }
-  
-      &__error {
+
+      &--error {
         color: red;
         padding-top: 1rem;
         &::before {
@@ -87,4 +87,8 @@
       margin-bottom: 2rem;
     }
   }
+}
+
+.form-error {
+  color: red;
 }

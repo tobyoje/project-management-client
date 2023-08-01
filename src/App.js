@@ -8,6 +8,7 @@ import React, { useEffect, useState } from "react";
 import AddNewTaskPopup from "./components/AddNewTaskPopup/AddNewTaskPopup";
 import axios from "axios";
 import LoginPage from "./pages/LoginPage/LoginPage";
+import SignUpPage from "./pages/SignUpPage/SignUpPage";
 
 function App() {
   const [addTaskPopup, setAddTaskPopup] = useState(false);
@@ -33,7 +34,7 @@ function App() {
                   {/* <LeftBar /> */}
                   <Routes>
                     <Route
-                      path="/"
+                      path="/project/:projectId"
                       element={
                         <ProjectPage
                           setAddTaskPopup={setAddTaskPopup}
@@ -49,6 +50,7 @@ function App() {
             />
 
             <Route path="/login" element={<LoginPage />} />
+            <Route path="/register" element={<SignUpPage />} />
           </Routes>
         </div>
       </BrowserRouter>

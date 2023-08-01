@@ -97,9 +97,14 @@
     margin-top: 1rem;
     height: 40rem;
     overflow: scroll;
+    
 
     @include media-widescreen {
       height: 90rem;
+    }
+
+    &--empty{
+      padding: 1.5rem 2rem;
     }
   }
 
@@ -246,6 +251,8 @@
   padding: 0;
   color: white;
   letter-spacing: 0.02rem;
+
+
 
   &--icon {
     margin-right: 2rem;

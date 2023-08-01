@@ -64,6 +64,7 @@ const ProjectListPage = () => {
         console.error("Error fetching user information:", error);
       });
   }, []);
+  
   if (!userData) {
     return (
       <div>
@@ -120,7 +121,7 @@ const ProjectListPage = () => {
             </Link>
 
             {userData.projects.length === 0 ? (
-              <p>No projects</p>
+              <p></p>
             ) : (
               <>
                 {userData.projects.map((projectItem) => (

@@ -29,6 +29,15 @@ const LeftBar = ({ userData }) => {
     console.log("something");
   };
 
+  const handleLogout = () => {
+    sessionStorage.removeItem("token");
+    sessionStorage.removeItem("user_id");
+
+    setTimeout(() => {
+      navigate("/login");
+    }, 1000);
+  };
+
   return (
     <>
       <div className="sidebar">
@@ -63,7 +72,7 @@ const LeftBar = ({ userData }) => {
 
           <div className="sidebar__projects-list">
             {userData.projects.length === 0 ? (
-              <p>No projects</p>
+              <p className="sidebar__projects-list--empty">No projects</p>
             ) : (
               <>
                 {userData.projects.map((projectItem) => (
@@ -85,7 +94,7 @@ const LeftBar = ({ userData }) => {
             />
             <p>Settings</p>
           </div>
-          <div className="sidebar__menu-container">
+          <div className="sidebar__menu-container" onClick={handleLogout}>
             <img
               className="sidebar__menu-container--icon"
               src={logoutIcon}

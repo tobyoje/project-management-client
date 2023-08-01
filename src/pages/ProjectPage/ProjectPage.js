@@ -7,12 +7,15 @@ import ProjectListView from "../../components/ProjectListView/ProjectListView";
 import editICON from "../../assets/icons/edit.svg";
 import axios from "axios";
 import LeftBar from "../../components/LeftBar/LeftBar";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 const ProjectPage = ({ setAddTaskPopup, setTaskType }) => {
   const navigate = useNavigate();
   const [userData, setUserData] = useState(null);
+  const [projectData, setProjectData] = useState(null);
+
   const [menuTab, setMenuTab] = useState("overview");
+  const { projectId } = useParams();
 
   const onChangeToOverview = () => {
     setMenuTab("overview");
@@ -26,34 +29,70 @@ const ProjectPage = ({ setAddTaskPopup, setTaskType }) => {
   };
 
   useEffect(() => {
-    const token = sessionStorage.getItem("token");
-    const userId = sessionStorage.getItem("user_id");
+    const fetchData = async () => {
+      try {
+        const token = sessionStorage.getItem("token");
+        const userId = sessionStorage.getItem("user_id");
 
-    if (!token && !userId) {
-      navigate("/login");
-    }
-
-    axios
-      .get(`http://localhost:8080/api/user/${userId}`, {
-        headers: {
-          Authorization: `Bearer ${token}`, // Attach the token in the headers for authentication
-        },
-      })
-      .then((response) => {
-        setUserData(response.data);
-      })
-      .catch((error) => {
+        if (!token || !userId) {
+          navigate("/login");
+        } else {
+          const response = await axios.get(
+            `http://localhost:8080/api/user/${userId}`,
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          );
+          setUserData(response.data);
+        }
+      } catch (error) {
         console.error("Error fetching user information:", error);
-      });
+      }
+    };
+
+    fetchData();
   }, []);
+
+  useEffect(() => {
+    const findProjectById = async () => {
+      if (userData) {
+        const foundProject = userData.projects.find(
+          (project) => project.project_id === parseInt(projectId)
+        );
+
+        await new Promise((resolve) => setTimeout(resolve, 1000));
+
+        if (foundProject) {
+          setProjectData(foundProject);
+        } else {
+          setProjectData(null);
+        }
+      }
+    };
+
+    findProjectById();
+  }, [userData, projectId]);
+
   if (!userData) {
     return (
       <div>
-        <p>loading...</p>
+        <p>Loading...</p>
       </div>
     );
   }
+
+  if (!projectData) {
+    return (
+      <div>
+        <p>Loading...</p>
+      </div>
+    );
+  }
+
   console.log(userData);
+  console.log(projectData);
 
   return (
     <>
@@ -63,8 +102,10 @@ const ProjectPage = ({ setAddTaskPopup, setTaskType }) => {
         <Header />
         <div className="project__content">
           <div className="project__title-container">
-            <div className="project__name-avatar">B</div>
-            <p className="project__name">Brixton App Project</p>
+            <div className="project__name-avatar">
+              {projectData.project_name[0]}
+            </div>
+            <p className="project__name">{projectData.project_name}</p>
           </div>
 
           <div className="project__menubar">
@@ -83,7 +124,7 @@ const ProjectPage = ({ setAddTaskPopup, setTaskType }) => {
                   menuTab === "gridview" ? "project__menubar--active" : ""
                 }
               >
-                Card View
+                Tasks Card View
               </li>
               <li
                 onClick={onChangeToList}
@@ -91,7 +132,7 @@ const ProjectPage = ({ setAddTaskPopup, setTaskType }) => {
                   menuTab === "listview" ? "project__menubar--active" : ""
                 }
               >
-                List View
+                Tasks List View
               </li>
             </ul>
 
@@ -106,12 +147,15 @@ const ProjectPage = ({ setAddTaskPopup, setTaskType }) => {
               <div>Edit Project</div>
             </div>
           </div>
-          {menuTab == "overview" && <ProjectOverview />}
+          {menuTab == "overview" && (
+            <ProjectOverview projectData={projectData} />
+          )}
 
           {menuTab == "gridview" && (
             <ProjectGridView
               setAddTaskPopup={setAddTaskPopup}
               setTaskType={setTaskType}
+              projectData={projectData}
             />
           )}
 
