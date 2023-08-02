@@ -9,7 +9,7 @@ import axios from "axios";
 import LeftBar from "../../components/LeftBar/LeftBar";
 import { useNavigate, useParams } from "react-router-dom";
 
-const ProjectPage = ({ setAddTaskPopup, setTaskType }) => {
+const ProjectPage = ({ addTaskPopup, setAddTaskPopup, editTaskPopup, setEditTaskPopup, setTaskType }) => {
   const navigate = useNavigate();
   const [userData, setUserData] = useState(null);
   const [projectData, setProjectData] = useState(null);
@@ -91,9 +91,6 @@ const ProjectPage = ({ setAddTaskPopup, setTaskType }) => {
     );
   }
 
-  console.log(userData);
-  console.log(projectData);
-
   return (
     <>
       <LeftBar userData={userData} />
@@ -154,6 +151,9 @@ const ProjectPage = ({ setAddTaskPopup, setTaskType }) => {
           {menuTab == "gridview" && (
             <ProjectGridView
               setAddTaskPopup={setAddTaskPopup}
+              addTaskPopup={addTaskPopup}
+              setEditTaskPopup={setEditTaskPopup}
+              editTaskPopup={editTaskPopup}
               setTaskType={setTaskType}
               projectData={projectData}
             />

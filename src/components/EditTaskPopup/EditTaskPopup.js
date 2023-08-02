@@ -1,10 +1,10 @@
-import "./AddNewTaskPopup.scss";
+import "./EditTaskPopup.scss";
 import cancelICON from "../../assets/icons/cancel.svg";
 import { useState } from "react";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 
-const AddNewTaskPopup = ({ setAddTaskPopup, taskType }) => {
+const EditTaskPopup = ({ setEditTaskPopup, taskType }) => {
   const navigate = useNavigate();
 
   // Get the current URL path
@@ -16,7 +16,7 @@ const AddNewTaskPopup = ({ setAddTaskPopup, taskType }) => {
   // Now you have the projectId, and you can use it as needed.
 
   const closePopup = () => {
-    setAddTaskPopup(false);
+    setEditTaskPopup(false);
   };
 
   const [newData, setNewData] = useState([]);
@@ -81,7 +81,7 @@ const AddNewTaskPopup = ({ setAddTaskPopup, taskType }) => {
       })
       .then((response) => {
         console.log(response.data);
-        setAddTaskPopup(false);
+        setEditTaskPopup(false);
       })
       .catch((error) => {
         console.log(error);
@@ -96,7 +96,7 @@ const AddNewTaskPopup = ({ setAddTaskPopup, taskType }) => {
         <div className="popup-container__content">
           <div className="popup-container__content-top">
             <p className="popup-container__title">
-              {`Add New Task in "${taskType}"`}
+              {`Edit Task in "${taskType}"`}
             </p>
             <img
               onClick={closePopup}
@@ -194,4 +194,4 @@ const AddNewTaskPopup = ({ setAddTaskPopup, taskType }) => {
   );
 };
 
-export default AddNewTaskPopup;
+export default EditTaskPopup;

@@ -1,26 +1,45 @@
 import plusICON from "../../assets/icons/plus.svg";
 import timeICON from "../../assets/icons/time.svg";
 import optionsICON from "../../assets/icons/options.svg";
-import { useState } from "react";
-import AddNewTaskPopup from "../AddNewTaskPopup/AddNewTaskPopup";
-const ProjectGridView = ({ projectData, setAddTaskPopup, setTaskType }) => {
+import editICON from "../../assets/icons/edit.svg";
+import { useEffect, useState } from "react";
+const ProjectGridView = ({
+  projectData,
+  addTaskPopup,
+  setAddTaskPopup,
+  editTaskPopup,
+  setEditTaskPopup,
+  setTaskType,
+}) => {
   const openAddTaskTodo = () => {
     setAddTaskPopup(true);
-    setTaskType('"To Do"');
+    setTaskType("To Do");
   };
 
   const openAddTaskProgress = () => {
     setAddTaskPopup(true);
-    setTaskType('"In Progress"');
+    setTaskType("In Progress");
   };
 
   const openAddTaskCompleted = () => {
     setAddTaskPopup(true);
-    setTaskType('"Completed"');
+    setTaskType("Completed");
   };
 
-  console.log(projectData.tasks);
+  const openEditTaskTodo = () => {
+    setEditTaskPopup(true);
+    setTaskType("To Do");
+  };
 
+  const openEditTaskProgress = () => {
+    setEditTaskPopup(true);
+    setTaskType("In Progress");
+  };
+
+  const openEditTaskCompleted = () => {
+    setEditTaskPopup(true);
+    setTaskType("Completed");
+  };
 
   const calculateTimeDifference = (startDate, endDate) => {
     const startDateObj = new Date(startDate);
@@ -29,7 +48,6 @@ const ProjectGridView = ({ projectData, setAddTaskPopup, setTaskType }) => {
     const days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
     return { days };
   };
-
 
   projectData.tasks.sort((a, b) => {
     if (a.task_id !== b.task_id) {
@@ -59,10 +77,6 @@ const ProjectGridView = ({ projectData, setAddTaskPopup, setTaskType }) => {
     }
   }
 
-  console.log("Completed Tasks:", completedTasks);
-  console.log("To Do Tasks:", todoTasks);
-  console.log("In Progress Tasks:", inProgressTasks);
-
   return (
     <>
       <div className="project__view">
@@ -85,7 +99,7 @@ const ProjectGridView = ({ projectData, setAddTaskPopup, setTaskType }) => {
             </div>
           </div>
           {todoTasks.map((todoTask) => (
-            <div className="project__task-container">
+            <div className="project__task-container" key={todoTask.task_id}>
               <div
                 className={`project__priority ${
                   todoTask.task_priority === "High"
@@ -114,18 +128,18 @@ const ProjectGridView = ({ projectData, setAddTaskPopup, setTaskType }) => {
                     alt="Time Icon"
                   />
                   <p className="project__grid-time">{`${
-                            calculateTimeDifference(
-                              todoTask.task_startdate,
-                              todoTask.task_enddate
-                            ).days
-                          }d left`}</p>
+                    calculateTimeDifference(
+                      todoTask.task_startdate,
+                      todoTask.task_enddate
+                    ).days
+                  }d left`}</p>
                 </div>
 
-                <div>
+                <div onClick={openEditTaskTodo}>
                   <img
                     className="project__grid-icon"
-                    src={optionsICON}
-                    alt="Options Icon"
+                    src={editICON}
+                    alt="Edit Icon"
                   />
                 </div>
               </div>
@@ -152,7 +166,10 @@ const ProjectGridView = ({ projectData, setAddTaskPopup, setTaskType }) => {
             </div>
           </div>
           {inProgressTasks.map((inProgressTask) => (
-            <div className="project__task-container">
+            <div
+              className="project__task-container"
+              key={inProgressTask.task_id}
+            >
               <div
                 className={`project__priority ${
                   inProgressTask.task_priority === "High"
@@ -183,18 +200,18 @@ const ProjectGridView = ({ projectData, setAddTaskPopup, setTaskType }) => {
                     alt="Time Icon"
                   />
                   <p className="project__grid-time">{`${
-                            calculateTimeDifference(
-                              inProgressTask.task_startdate,
-                              inProgressTask.task_enddate
-                            ).days
-                          }d left`}</p>
+                    calculateTimeDifference(
+                      inProgressTask.task_startdate,
+                      inProgressTask.task_enddate
+                    ).days
+                  }d left`}</p>
                 </div>
 
-                <div>
+                <div onClick={openEditTaskProgress}>
                   <img
                     className="project__grid-icon"
-                    src={optionsICON}
-                    alt="Options Icon"
+                    src={editICON}
+                    alt="Edit Icon"
                   />
                 </div>
               </div>
@@ -221,7 +238,10 @@ const ProjectGridView = ({ projectData, setAddTaskPopup, setTaskType }) => {
           </div>
 
           {completedTasks.map((completedTask) => (
-            <div className="project__task-container">
+            <div
+              className="project__task-container"
+              key={completedTask.task_id}
+            >
               <div
                 className={`project__priority ${
                   completedTask.task_priority === "High"
@@ -251,19 +271,22 @@ const ProjectGridView = ({ projectData, setAddTaskPopup, setTaskType }) => {
                     src={timeICON}
                     alt="Time Icon"
                   />
-                  <p className="project__grid-time"> {`${
-                            calculateTimeDifference(
-                              completedTask.task_startdate,
-                              completedTask.task_enddate
-                            ).days
-                          }d left`}</p>
+                  <p className="project__grid-time">
+                    {" "}
+                    {`${
+                      calculateTimeDifference(
+                        completedTask.task_startdate,
+                        completedTask.task_enddate
+                      ).days
+                    }d left`}
+                  </p>
                 </div>
 
-                <div>
+                <div onClick={openEditTaskCompleted}>
                   <img
                     className="project__grid-icon"
-                    src={optionsICON}
-                    alt="Options Icon"
+                    src={editICON}
+                    alt="Edit Icon"
                   />
                 </div>
               </div>

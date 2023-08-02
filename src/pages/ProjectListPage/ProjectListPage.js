@@ -40,9 +40,6 @@ const ProjectListPage = () => {
     return { days };
   };
 
-
-
-
   useEffect(() => {
     const token = sessionStorage.getItem("token");
     const userId = sessionStorage.getItem("user_id");
@@ -64,7 +61,7 @@ const ProjectListPage = () => {
         console.error("Error fetching user information:", error);
       });
   }, []);
-  
+
   if (!userData) {
     return (
       <div>
@@ -84,7 +81,9 @@ const ProjectListPage = () => {
             <p className="projectlist__counter--title">
               Total Projects -&nbsp;
             </p>
-            <p className="projectlist__counter--number">{userData.projects.length}</p>
+            <p className="projectlist__counter--number">
+              {userData.projects.length}
+            </p>
           </div>
 
           <div className="projectlist__sort">
@@ -125,72 +124,74 @@ const ProjectListPage = () => {
             ) : (
               <>
                 {userData.projects.map((projectItem) => (
-                  <div
-                    className="projectlist__grid-item"
-                    key={projectItem.project_id}
-                  >
-                    <p className="projectlist__grid-title">
-                      {projectItem.project_name}
-                    </p>
-                    <p className="projectlist__grid-desc">
-                      {`${projectItem.project_description.substring(
-                        0,
-                        110
-                      )} ...`}
-                    </p>
+                  <Link to={`/project/${projectItem.project_id}`}>
                     <div
-                      className={`projectlist__grid-priority ${
-                        projectItem.project_priority === "High"
-                          ? "projectlist__grid-priority--high"
-                          : ""
-                      } ${
-                        projectItem.project_priority === "Low"
-                          ? "projectlist__grid-priority--low"
-                          : ""
-                      } ${
-                        projectItem.project_priority === "Medium"
-                          ? "projectlist__grid-priority--medium"
-                          : ""
-                      } `}
+                      className="projectlist__grid-item"
+                      key={projectItem.project_id}
                     >
-                      {projectItem.project_priority}
-                    </div>
-                    <div className="projectlist__grid-bottom">
-                      <div className="projectlist__grid-timecontainer">
-                        <img
-                          className="projectlist__grid-icon projectlist__grid-icon--space"
-                          src={timeICON}
-                          alt="Time Icon"
-                        />
-                        <p className="projectlist__grid-time">
-                          {`${
-                            calculateTimeDifference(
-                              projectItem.project_startdate,
-                              projectItem.project_enddate
-                            ).days
-                          }d left`}
-                        </p>
+                      <p className="projectlist__grid-title">
+                        {projectItem.project_name}
+                      </p>
+                      <p className="projectlist__grid-desc">
+                        {`${projectItem.project_description.substring(
+                          0,
+                          110
+                        )} ...`}
+                      </p>
+                      <div
+                        className={`projectlist__grid-priority ${
+                          projectItem.project_priority === "High"
+                            ? "projectlist__grid-priority--high"
+                            : ""
+                        } ${
+                          projectItem.project_priority === "Low"
+                            ? "projectlist__grid-priority--low"
+                            : ""
+                        } ${
+                          projectItem.project_priority === "Medium"
+                            ? "projectlist__grid-priority--medium"
+                            : ""
+                        } `}
+                      >
+                        {projectItem.project_priority}
                       </div>
+                      <div className="projectlist__grid-bottom">
+                        <div className="projectlist__grid-timecontainer">
+                          <img
+                            className="projectlist__grid-icon projectlist__grid-icon--space"
+                            src={timeICON}
+                            alt="Time Icon"
+                          />
+                          <p className="projectlist__grid-time">
+                            {`${
+                              calculateTimeDifference(
+                                projectItem.project_startdate,
+                                projectItem.project_enddate
+                              ).days
+                            }d left`}
+                          </p>
+                        </div>
 
-                      <div>
-                        <img
-                          // onClick={onChangeFavIcon}
-                          className="projectlist__grid-icon projectlist__grid-icon--space"
-                          src={
-                            projectItem.favorite === 1
-                              ? favoriteICON
-                              : xfavoriteICON
-                          }
-                          alt="Favorite Icon"
-                        />
-                        <img
-                          className="projectlist__grid-icon"
-                          src={optionsICON}
-                          alt="Options Icon"
-                        />
+                        <div>
+                          <img
+                            // onClick={onChangeFavIcon}
+                            className="projectlist__grid-icon projectlist__grid-icon--space"
+                            src={
+                              projectItem.favorite === 1
+                                ? favoriteICON
+                                : xfavoriteICON
+                            }
+                            alt="Favorite Icon"
+                          />
+                          <img
+                            className="projectlist__grid-icon"
+                            src={optionsICON}
+                            alt="Options Icon"
+                          />
+                        </div>
                       </div>
                     </div>
-                  </div>
+                  </Link>
                 ))}
               </>
             )}

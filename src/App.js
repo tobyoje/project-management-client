@@ -9,9 +9,12 @@ import AddNewTaskPopup from "./components/AddNewTaskPopup/AddNewTaskPopup";
 import axios from "axios";
 import LoginPage from "./pages/LoginPage/LoginPage";
 import SignUpPage from "./pages/SignUpPage/SignUpPage";
+import EditTaskPopup from "./components/EditTaskPopup/EditTaskPopup";
+
 
 function App() {
   const [addTaskPopup, setAddTaskPopup] = useState(false);
+  const [editTaskPopup, setEditTaskPopup] = useState(false);
   const [taskType, setTaskType] = useState("");
 
   return (
@@ -26,18 +29,29 @@ function App() {
             />
           ) : null}
 
+
+{editTaskPopup ? (
+            <EditTaskPopup
+            setEditTaskPopup={setEditTaskPopup}
+              taskType={taskType}
+              setTaskType={setTaskType}
+            />
+          ) : null}
+
           <Routes>
             <Route
               path="/*"
               element={
                 <React.Fragment>
-                  {/* <LeftBar /> */}
                   <Routes>
                     <Route
                       path="/project/:projectId"
                       element={
                         <ProjectPage
                           setAddTaskPopup={setAddTaskPopup}
+                          addTaskPopup={addTaskPopup}
+                          setEditTaskPopup={setEditTaskPopup}
+                          editTaskPopup={editTaskPopup}
                           setTaskType={setTaskType}
                         />
                       }
