@@ -7,13 +7,10 @@ import { useNavigate, useParams } from "react-router-dom";
 const AddNewTaskPopup = ({ setAddTaskPopup, taskType }) => {
   const navigate = useNavigate();
 
-  // Get the current URL path
   const path = window.location.pathname;
 
-  // Extract the projectId from the URL path
   const projectId = path.split("/").pop();
 
-  // Now you have the projectId, and you can use it as needed.
 
   const closePopup = () => {
     setAddTaskPopup(false);

@@ -11,6 +11,8 @@ const ProjectGridView = ({
   setEditTaskPopup,
   setTaskType,
 }) => {
+  const [taskId, setTaskId] = useState("");
+
   const openAddTaskTodo = () => {
     setAddTaskPopup(true);
     setTaskType("To Do");
@@ -23,21 +25,6 @@ const ProjectGridView = ({
 
   const openAddTaskCompleted = () => {
     setAddTaskPopup(true);
-    setTaskType("Completed");
-  };
-
-  const openEditTaskTodo = () => {
-    setEditTaskPopup(true);
-    setTaskType("To Do");
-  };
-
-  const openEditTaskProgress = () => {
-    setEditTaskPopup(true);
-    setTaskType("In Progress");
-  };
-
-  const openEditTaskCompleted = () => {
-    setEditTaskPopup(true);
     setTaskType("Completed");
   };
 
@@ -76,6 +63,32 @@ const ProjectGridView = ({
         break;
     }
   }
+
+  const openEditTaskTodo = (taskId) => {
+    setEditTaskPopup(true);
+    setTaskType("To Do");
+
+    const newPath = `/project/${projectData.project_id}/#${taskId}`;
+    window.history.pushState(null, "", newPath);
+  };
+
+  const openEditTaskProgress = (taskId) => {
+    setEditTaskPopup(true);
+    setTaskType("In Progress");
+    setTaskId(taskId);
+
+    const newPath = `/project/${projectData.project_id}/#${taskId}`;
+    window.history.pushState(null, "", newPath);
+  };
+
+  const openEditTaskCompleted = (taskId) => {
+    setEditTaskPopup(true);
+    setTaskType("Completed");
+
+    const newPath = `/project/${projectData.project_id}/#${taskId}`;
+    window.history.pushState(null, "", newPath);
+  };
+
 
   return (
     <>
@@ -135,7 +148,7 @@ const ProjectGridView = ({
                   }d left`}</p>
                 </div>
 
-                <div onClick={openEditTaskTodo}>
+                <div onClick={() => openEditTaskTodo(todoTask.task_id)}>
                   <img
                     className="project__grid-icon"
                     src={editICON}
@@ -207,7 +220,9 @@ const ProjectGridView = ({
                   }d left`}</p>
                 </div>
 
-                <div onClick={openEditTaskProgress}>
+                <div
+                  onClick={() => openEditTaskProgress(inProgressTask.task_id)}
+                >
                   <img
                     className="project__grid-icon"
                     src={editICON}
@@ -282,7 +297,9 @@ const ProjectGridView = ({
                   </p>
                 </div>
 
-                <div onClick={openEditTaskCompleted}>
+                <div
+                  onClick={() => openEditTaskCompleted(completedTask.task_id)}
+                >
                   <img
                     className="project__grid-icon"
                     src={editICON}

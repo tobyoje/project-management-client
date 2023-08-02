@@ -7,15 +7,21 @@ import { useNavigate, useParams } from "react-router-dom";
 const EditTaskPopup = ({ setEditTaskPopup, taskType }) => {
   const navigate = useNavigate();
 
-  // Get the current URL path
   const path = window.location.pathname;
 
-  // Extract the projectId from the URL path
-  const projectId = path.split("/").pop();
+  const taskId = path.split("/").pop();
 
-  // Now you have the projectId, and you can use it as needed.
 
   const closePopup = () => {
+    const currentPathname = window.location.pathname;
+
+    const newPathname = currentPathname.substring(
+      0,
+      currentPathname.lastIndexOf("/")
+    );
+
+    window.history.replaceState(null, "", newPathname);
+
     setEditTaskPopup(false);
   };
 
@@ -61,26 +67,33 @@ const EditTaskPopup = ({ setEditTaskPopup, taskType }) => {
     //   return setFormErrors(errors);
     // }
 
-    const newTaskInfo = {
+    const updatedTaskInfo = {
       task_name: newData.taskTitle,
       task_category: taskType,
       task_priority: newData.taskPriority,
       task_startdate: newData.taskStartDate,
       task_enddate: newData.taskEndDate,
-      project_id: projectId,
+      task_id: taskId,
     };
 
-    console.log(newTaskInfo);
     const token = sessionStorage.getItem("token");
 
     axios
-      .post(`http://localhost:8080/api/user/add-task`, newTaskInfo, {
+      .put(`http://localhost:8080/api/user/edit-task/`, updatedTaskInfo, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       })
       .then((response) => {
         console.log(response.data);
+    const currentPathname = window.location.pathname;
+
+    const newPathname = currentPathname.substring(
+      0,
+      currentPathname.lastIndexOf("/")
+    );
+
+    window.history.replaceState(null, "", newPathname);
         setEditTaskPopup(false);
       })
       .catch((error) => {
@@ -185,7 +198,7 @@ const EditTaskPopup = ({ setEditTaskPopup, taskType }) => {
               onClick={handleAddTask}
               className="popup-container__form--submit"
             >
-              Create
+              Update
             </div>
           </form>
         </div>
