@@ -1,15 +1,41 @@
 import "./EditTaskPopup.scss";
 import cancelICON from "../../assets/icons/cancel.svg";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 
 const EditTaskPopup = ({ setEditTaskPopup, taskType }) => {
   const navigate = useNavigate();
 
+  const [taskInfo, setTaskInfo] = useState(null);
+
+  // Get the current URL hash
+  const hash = window.location.hash;
+
+  // Extract the taskId from the hash
+  const taskId = hash.slice(1); // Remove the leading hash symbol
+
+  // Get the current URL path
   const path = window.location.pathname;
 
-  const taskId = path.split("/").pop();
+  // Extract the projectId from the URL path
+  const projectId = path.match(/\/project\/(\d+)/)[1];
+
+
+
+
+
+  const formatDatetime = (datetime) => {
+    const date = new Date(datetime);
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    const hours = String(date.getHours()).padStart(2, '0');
+    const minutes = String(date.getMinutes()).padStart(2, '0');
+  
+    return `${year}-${month}-${day}T${hours}:${minutes}`;
+  }
+
 
 
   const closePopup = () => {
@@ -45,6 +71,31 @@ const EditTaskPopup = ({ setEditTaskPopup, taskType }) => {
     }
   };
 
+  const token = sessionStorage.getItem("token");
+
+  useEffect(() => {
+    axios
+      .get(`http://localhost:8080/api/user/task/${taskId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((response) => {
+        setTaskInfo(response.data.task);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
+
+  if (!taskInfo) {
+    return (
+      <div>
+        <p>Loading...</p>
+      </div>
+    );
+  }
+
   const handleAddTask = (event) => {
     event.preventDefault();
     // setFormErrors({});
@@ -68,15 +119,13 @@ const EditTaskPopup = ({ setEditTaskPopup, taskType }) => {
     // }
 
     const updatedTaskInfo = {
-      task_name: newData.taskTitle,
+      task_name: newData.taskTitle || taskInfo.task_name,
       task_category: taskType,
-      task_priority: newData.taskPriority,
-      task_startdate: newData.taskStartDate,
-      task_enddate: newData.taskEndDate,
+      task_priority: newData.taskPriority || taskInfo.task_priority,
+      task_startdate: newData.taskStartDate || taskInfo.task_startdate,
+      task_enddate: newData.taskEndDate || taskInfo.task_enddate,
       task_id: taskId,
     };
-
-    const token = sessionStorage.getItem("token");
 
     axios
       .put(`http://localhost:8080/api/user/edit-task/`, updatedTaskInfo, {
@@ -86,22 +135,20 @@ const EditTaskPopup = ({ setEditTaskPopup, taskType }) => {
       })
       .then((response) => {
         console.log(response.data);
-    const currentPathname = window.location.pathname;
+        const currentPathname = window.location.pathname;
 
-    const newPathname = currentPathname.substring(
-      0,
-      currentPathname.lastIndexOf("/")
-    );
+        const newPathname = currentPathname.substring(
+          0,
+          currentPathname.lastIndexOf("/")
+        );
 
-    window.history.replaceState(null, "", newPathname);
+        window.history.replaceState(null, "", newPathname);
         setEditTaskPopup(false);
       })
       .catch((error) => {
         console.log(error);
       });
   };
-
-  // console.log(projectId);
 
   return (
     <>
@@ -125,6 +172,7 @@ const EditTaskPopup = ({ setEditTaskPopup, taskType }) => {
               <input
                 type="text"
                 name="taskTitle"
+                defaultValue={taskInfo.task_name}
                 onChange={(event) => handleChange(event)}
               />
 
@@ -133,6 +181,26 @@ const EditTaskPopup = ({ setEditTaskPopup, taskType }) => {
               <textarea name="taskDescription"></textarea> */}
             </div>
 
+
+            <div >
+            <label>Task Title</label>
+<div className="popup-container__form--category">
+            <label htmlFor="task1">
+                <input type="radio" id="task1" name="tasks" value="task1"/>
+                To Do
+            </label><br />
+            
+            <label htmlFor="task2">
+                <input type="radio" id="task2" name="tasks" value="task2"/>
+                In Progress
+            </label><br />
+            
+            <label htmlFor="task3">
+                <input type="radio" id="task3" name="tasks" value="task3"/>
+               Completed
+            </label><br />
+        </div>
+        </div>
             <div className="popup-container__form--other-info">
               <label>Task Priority</label>
 
@@ -142,6 +210,7 @@ const EditTaskPopup = ({ setEditTaskPopup, taskType }) => {
                     type="radio"
                     name="taskPriority"
                     id="High"
+                    // checked={taskInfo.task_priority === "High"}
                     onChange={(event) => handleChange(event)}
                   />
                   <label className="priority-high" htmlFor="High">
@@ -154,6 +223,7 @@ const EditTaskPopup = ({ setEditTaskPopup, taskType }) => {
                     type="radio"
                     name="taskPriority"
                     id="Medium"
+                    // checked={taskInfo.task_priority === "Medium"}
                     onChange={(event) => handleChange(event)}
                   />
                   <label className="priority-medium" htmlFor="Medium">
@@ -166,6 +236,7 @@ const EditTaskPopup = ({ setEditTaskPopup, taskType }) => {
                     type="radio"
                     name="taskPriority"
                     id="Low"
+                    // checked={taskInfo.task_priority === "Low"}
                     onChange={(event) => handleChange(event)}
                   />
                   <label className="priority-low" htmlFor="Low">
@@ -180,6 +251,7 @@ const EditTaskPopup = ({ setEditTaskPopup, taskType }) => {
                   <input
                     type="datetime-local"
                     name="taskStartDate"
+                    // defaultValue={formatDatetime(taskInfo.task_startdate)}
                     onChange={(event) => handleChange(event)}
                   />
                 </div>
@@ -189,6 +261,7 @@ const EditTaskPopup = ({ setEditTaskPopup, taskType }) => {
                   <input
                     type="datetime-local"
                     name="taskEndDate"
+                    // defaultValue={formatDatetime(taskInfo.task_enddate)}
                     onChange={(event) => handleChange(event)}
                   />
                 </div>

@@ -88,7 +88,16 @@
         }
       }
     }
-
+&--category{
+  display: flex;
+  label  {
+    margin-right: 2rem;
+    margin-bottom: 1.5rem;
+  }
+  input {
+    margin-right: 1rem;
+  }
+}
     &--other-info {
       display: flex;
       flex-direction: column;

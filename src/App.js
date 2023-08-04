@@ -13,30 +13,30 @@ import EditTaskPopup from "./components/EditTaskPopup/EditTaskPopup";
 
 
 function App() {
-  const [addTaskPopup, setAddTaskPopup] = useState(false);
-  const [editTaskPopup, setEditTaskPopup] = useState(false);
-  const [taskType, setTaskType] = useState("");
+  // const [addTaskPopup, setAddTaskPopup] = useState(false);
+  // const [editTaskPopup, setEditTaskPopup] = useState(false);
+  // const [taskType, setTaskType] = useState("");
 
   return (
     <div className="app">
       <BrowserRouter>
         <div className="app__divide">
-          {addTaskPopup ? (
+          {/* {addTaskPopup ? (
             <AddNewTaskPopup
               setAddTaskPopup={setAddTaskPopup}
               taskType={taskType}
               setTaskType={setTaskType}
             />
-          ) : null}
+          ) : null} */}
 
 
-{editTaskPopup ? (
+{/* {editTaskPopup ? (
             <EditTaskPopup
             setEditTaskPopup={setEditTaskPopup}
               taskType={taskType}
               setTaskType={setTaskType}
             />
-          ) : null}
+          ) : null} */}
 
           <Routes>
             <Route
@@ -48,11 +48,11 @@ function App() {
                       path="/project/:projectId"
                       element={
                         <ProjectPage
-                          setAddTaskPopup={setAddTaskPopup}
-                          addTaskPopup={addTaskPopup}
-                          setEditTaskPopup={setEditTaskPopup}
-                          editTaskPopup={editTaskPopup}
-                          setTaskType={setTaskType}
+                          // setAddTaskPopup={setAddTaskPopup}
+                          // addTaskPopup={addTaskPopup}
+                          // setEditTaskPopup={setEditTaskPopup}
+                          // editTaskPopup={editTaskPopup}
+                          // setTaskType={setTaskType}
                         />
                       }
                     />

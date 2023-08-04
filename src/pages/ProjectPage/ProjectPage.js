@@ -8,11 +8,17 @@ import editICON from "../../assets/icons/edit.svg";
 import axios from "axios";
 import LeftBar from "../../components/LeftBar/LeftBar";
 import { useNavigate, useParams } from "react-router-dom";
+import AddNewTaskPopup from "../../components/AddNewTaskPopup/AddNewTaskPopup";
+import EditTaskPopup from "../../components/EditTaskPopup/EditTaskPopup";
 
-const ProjectPage = ({ addTaskPopup, setAddTaskPopup, editTaskPopup, setEditTaskPopup, setTaskType }) => {
+const ProjectPage = () => {
   const navigate = useNavigate();
   const [userData, setUserData] = useState(null);
   const [projectData, setProjectData] = useState(null);
+  const [addTaskPopup, setAddTaskPopup] = useState(false);
+  const [editTaskPopup, setEditTaskPopup] = useState(false);
+
+  const [taskType, setTaskType] = useState("");
 
   const [menuTab, setMenuTab] = useState("overview");
   const { projectId } = useParams();
@@ -91,8 +97,27 @@ const ProjectPage = ({ addTaskPopup, setAddTaskPopup, editTaskPopup, setEditTask
     );
   }
 
+// console.log(projectData);
+
+
   return (
     <>
+      {addTaskPopup ? (
+        <AddNewTaskPopup
+          setAddTaskPopup={setAddTaskPopup}
+          taskType={taskType}
+          setTaskType={setTaskType}
+        />
+      ) : null}
+
+      {editTaskPopup ? (
+        <EditTaskPopup
+          setEditTaskPopup={setEditTaskPopup}
+          taskType={taskType}
+          setTaskType={setTaskType}
+        />
+      ) : null}
+
       <LeftBar userData={userData} />
 
       <div className="project">
