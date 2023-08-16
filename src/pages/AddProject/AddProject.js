@@ -117,14 +117,14 @@ const AddProject = () => {
 
             <form className="project-add__form">
               <div className="project-add__form--leftcol">
-                <label>Task Title</label>
+                <label>Project Title</label>
                 <input
                   type="text"
                   name="projectTitle"
                   onChange={(event) => handleChange(event)}
                 />
 
-                <label>Task Description</label>
+                <label>Project Description</label>
 
                 <textarea
                   name="projectDescription"

@@ -1,18 +1,35 @@
-import "./AddNewTaskPopup.scss";
+import "./EditProjectPopup.scss";
+import { useEffect, useState } from "react";
 import cancelICON from "../../assets/icons/cancel.svg";
-import { useState } from "react";
 import axios from "axios";
-import { useNavigate, useParams } from "react-router-dom";
 
-const AddNewTaskPopup = ({ setAddTaskPopup, taskType, setProjectData }) => {
-  const navigate = useNavigate();
+const EditProjectPopup = ({
+  setEditProjectPopup,
+  projectData,
+  setProjectData,
+}) => {
+  const formatDatetime = (datetime) => {
+    const date = new Date(datetime);
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const day = String(date.getDate()).padStart(2, "0");
+    const hours = String(date.getHours()).padStart(2, "0");
+    const minutes = String(date.getMinutes()).padStart(2, "0");
 
-  const path = window.location.pathname;
-
-  const projectId = path.split("/").pop();
+    return `${year}-${month}-${day}T${hours}:${minutes}`;
+  };
 
   const closePopup = () => {
-    setAddTaskPopup(false);
+    const currentPathname = window.location.pathname;
+
+    const newPathname = currentPathname.substring(
+      0,
+      currentPathname.lastIndexOf("/")
+    );
+
+    window.history.replaceState(null, "", newPathname);
+
+    setEditProjectPopup(false);
   };
 
   const [newData, setNewData] = useState([]);
@@ -22,7 +39,7 @@ const AddNewTaskPopup = ({ setAddTaskPopup, taskType, setProjectData }) => {
   const handleChange = (event) => {
     const { name, value, type } = event.target;
 
-    if (type === "radio" && name === "taskPriority") {
+    if (type === "radio" && name === "projectPriority") {
       setNewData({
         ...newData,
         [name]: event.target.id,
@@ -35,14 +52,15 @@ const AddNewTaskPopup = ({ setAddTaskPopup, taskType, setProjectData }) => {
     }
   };
 
+  console.log(projectData);
+
+  const token = sessionStorage.getItem("token");
+
   const handleAddTask = (event) => {
     event.preventDefault();
     // setFormErrors({});
-
     // let formIsValid = true;
-
     // const errors = {};
-
     // if (
     //   !newData.taskTitle &
     //   !newData.taskPriority &
@@ -52,24 +70,21 @@ const AddNewTaskPopup = ({ setAddTaskPopup, taskType, setProjectData }) => {
     //   formIsValid = false;
     //   errors["error_required"] = true;
     // }
-
     // if (!formIsValid) {
     //   return setFormErrors(errors);
     // }
-
-    const newTaskInfo = {
-      task_name: newData.taskTitle,
-      task_category: taskType,
-      task_priority: newData.taskPriority,
-      task_startdate: newData.taskStartDate,
-      task_enddate: newData.taskEndDate,
-      project_id: projectId,
+    const updatedProjectInfo = {
+      project_name: newData.projectTitle || projectData.project_name,
+      project_description:
+        newData.projectDescription || projectData.project_description,
+      project_priority: newData.projectPriority || projectData.project_priority,
+      project_startdate:
+        newData.projectStartDate || projectData.project_startdate,
+      project_enddate: newData.projectEndDate || projectData.project_enddate,
+      project_id: projectData.project_id,
     };
-
-    const token = sessionStorage.getItem("token");
-
     axios
-      .post(`http://localhost:8080/api/user/add-task`, newTaskInfo, {
+      .put(`http://localhost:8080/api/user/edit-project/`, updatedProjectInfo, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -77,7 +92,7 @@ const AddNewTaskPopup = ({ setAddTaskPopup, taskType, setProjectData }) => {
       .then((response) => {
         console.log(response.data);
         setProjectData(response.data);
-        setAddTaskPopup(false);
+        setEditProjectPopup(false);
       })
       .catch((error) => {
         console.log(error);
@@ -89,9 +104,7 @@ const AddNewTaskPopup = ({ setAddTaskPopup, taskType, setProjectData }) => {
       <div className="popup-container">
         <div className="popup-container__content">
           <div className="popup-container__content-top">
-            <p className="popup-container__title">
-              {`Add New Task in "${taskType}"`}
-            </p>
+            <p className="popup-container__title">Edit Project</p>
             <img
               onClick={closePopup}
               className="popup-container__content-top--icon"
@@ -102,30 +115,37 @@ const AddNewTaskPopup = ({ setAddTaskPopup, taskType, setProjectData }) => {
 
           <form className="popup-container__form">
             <div className="popup-container__form--textinfo">
-              <label>Task Title</label>
+              <label>Project Title</label>
               <input
                 type="text"
-                name="taskTitle"
+                name="projectTitle"
+                defaultValue={projectData.project_name}
                 onChange={(event) => handleChange(event)}
               />
-
-              {/* <label>Task Description</label>
-
-              <textarea name="taskDescription"></textarea> */}
             </div>
 
+            <div className="popup-container__form--textinfo">
+              <label>Project Description</label>
+
+              <textarea
+                name="projectDescription"
+                defaultValue={projectData.project_description}
+                onChange={(event) => handleChange(event)}
+              ></textarea>
+            </div>
             <div className="popup-container__form--other-info">
-              <label>Task Priority</label>
+              <label>Project Priority</label>
 
               <div className="popup-container__pr-label">
                 <div>
                   <input
                     type="radio"
-                    name="taskPriority"
+                    name="projectPriority"
                     id="High"
+                    // checked={projectData.project_priority === "High" }
                     onChange={(event) => handleChange(event)}
                   />
-                  <label className="priority-high" htmlFor="High">
+                  <label className="priority priority-high" htmlFor="High">
                     High
                   </label>
                 </div>
@@ -133,11 +153,12 @@ const AddNewTaskPopup = ({ setAddTaskPopup, taskType, setProjectData }) => {
                 <div>
                   <input
                     type="radio"
-                    name="taskPriority"
+                    name="projectPriority"
                     id="Medium"
+                    // checked={projectData.project_priority === "Medium"}
                     onChange={(event) => handleChange(event)}
                   />
-                  <label className="priority-medium" htmlFor="Medium">
+                  <label className="priority priority-medium" htmlFor="Medium">
                     Medium
                   </label>
                 </div>
@@ -145,11 +166,12 @@ const AddNewTaskPopup = ({ setAddTaskPopup, taskType, setProjectData }) => {
                 <div>
                   <input
                     type="radio"
-                    name="taskPriority"
+                    name="projectPriority"
                     id="Low"
+                    // checked={projectData.project_priority === "Low"}
                     onChange={(event) => handleChange(event)}
                   />
-                  <label className="priority-low" htmlFor="Low">
+                  <label className="priority priority-low" htmlFor="Low">
                     Low
                   </label>
                 </div>
@@ -160,7 +182,8 @@ const AddNewTaskPopup = ({ setAddTaskPopup, taskType, setProjectData }) => {
                   <label>Start Date</label>
                   <input
                     type="datetime-local"
-                    name="taskStartDate"
+                    name="projectStartDate"
+                    // defaultValue={formatDatetime(projectData.project_startdate)}
                     onChange={(event) => handleChange(event)}
                   />
                 </div>
@@ -169,7 +192,8 @@ const AddNewTaskPopup = ({ setAddTaskPopup, taskType, setProjectData }) => {
                   <label>Due Date</label>
                   <input
                     type="datetime-local"
-                    name="taskEndDate"
+                    name="projectEndDate"
+                    // defaultValue={formatDatetime(projectData.project_startdate)}
                     onChange={(event) => handleChange(event)}
                   />
                 </div>
@@ -179,7 +203,7 @@ const AddNewTaskPopup = ({ setAddTaskPopup, taskType, setProjectData }) => {
               onClick={handleAddTask}
               className="popup-container__form--submit"
             >
-              Create
+              Update
             </div>
           </form>
         </div>
@@ -188,4 +212,4 @@ const AddNewTaskPopup = ({ setAddTaskPopup, taskType, setProjectData }) => {
   );
 };
 
-export default AddNewTaskPopup;
+export default EditProjectPopup;

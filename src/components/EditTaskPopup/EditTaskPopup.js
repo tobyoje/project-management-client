@@ -4,7 +4,12 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 
-const EditTaskPopup = ({ setEditTaskPopup, taskType }) => {
+const EditTaskPopup = ({
+  setEditTaskPopup,
+  taskType,
+  findProjectById,
+  setProjectData,
+}) => {
   const navigate = useNavigate();
 
   const [taskInfo, setTaskInfo] = useState(null);
@@ -21,22 +26,16 @@ const EditTaskPopup = ({ setEditTaskPopup, taskType }) => {
   // Extract the projectId from the URL path
   const projectId = path.match(/\/project\/(\d+)/)[1];
 
-
-
-
-
   const formatDatetime = (datetime) => {
     const date = new Date(datetime);
     const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, '0');
-    const day = String(date.getDate()).padStart(2, '0');
-    const hours = String(date.getHours()).padStart(2, '0');
-    const minutes = String(date.getMinutes()).padStart(2, '0');
-  
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const day = String(date.getDate()).padStart(2, "0");
+    const hours = String(date.getHours()).padStart(2, "0");
+    const minutes = String(date.getMinutes()).padStart(2, "0");
+
     return `${year}-${month}-${day}T${hours}:${minutes}`;
-  }
-
-
+  };
 
   const closePopup = () => {
     const currentPathname = window.location.pathname;
@@ -96,7 +95,7 @@ const EditTaskPopup = ({ setEditTaskPopup, taskType }) => {
     );
   }
 
-  const handleAddTask = (event) => {
+  const handleEditTask = (event) => {
     event.preventDefault();
     // setFormErrors({});
 
@@ -120,7 +119,7 @@ const EditTaskPopup = ({ setEditTaskPopup, taskType }) => {
 
     const updatedTaskInfo = {
       task_name: newData.taskTitle || taskInfo.task_name,
-      task_category: taskType,
+      task_category: newData.taskCategory || taskType,
       task_priority: newData.taskPriority || taskInfo.task_priority,
       task_startdate: newData.taskStartDate || taskInfo.task_startdate,
       task_enddate: newData.taskEndDate || taskInfo.task_enddate,
@@ -135,6 +134,7 @@ const EditTaskPopup = ({ setEditTaskPopup, taskType }) => {
       })
       .then((response) => {
         console.log(response.data);
+        setProjectData(response.data);
         const currentPathname = window.location.pathname;
 
         const newPathname = currentPathname.substring(
@@ -181,26 +181,46 @@ const EditTaskPopup = ({ setEditTaskPopup, taskType }) => {
               <textarea name="taskDescription"></textarea> */}
             </div>
 
+            <div>
+              <label>Task Category</label>
+              <div className="popup-container__form--category">
+                <label htmlFor="task1">
+                  <input
+                    onChange={(event) => handleChange(event)}
+                    type="radio"
+                    id="task1"
+                    name="taskCategory"
+                    value="To Do"
+                  />
+                  To Do
+                </label>
+                <br />
 
-            <div >
-            <label>Task Title</label>
-<div className="popup-container__form--category">
-            <label htmlFor="task1">
-                <input type="radio" id="task1" name="tasks" value="task1"/>
-                To Do
-            </label><br />
-            
-            <label htmlFor="task2">
-                <input type="radio" id="task2" name="tasks" value="task2"/>
-                In Progress
-            </label><br />
-            
-            <label htmlFor="task3">
-                <input type="radio" id="task3" name="tasks" value="task3"/>
-               Completed
-            </label><br />
-        </div>
-        </div>
+                <label htmlFor="task2">
+                  <input
+                    onChange={(event) => handleChange(event)}
+                    type="radio"
+                    id="task2"
+                    name="taskCategory"
+                    value="In Progress"
+                  />
+                  In Progress
+                </label>
+                <br />
+
+                <label htmlFor="task3">
+                  <input
+                    onChange={(event) => handleChange(event)}
+                    type="radio"
+                    id="task3"
+                    name="taskCategory"
+                    value="Completed"
+                  />
+                  Completed
+                </label>
+                <br />
+              </div>
+            </div>
             <div className="popup-container__form--other-info">
               <label>Task Priority</label>
 
@@ -268,7 +288,7 @@ const EditTaskPopup = ({ setEditTaskPopup, taskType }) => {
               </div>
             </div>
             <div
-              onClick={handleAddTask}
+              onClick={handleEditTask}
               className="popup-container__form--submit"
             >
               Update

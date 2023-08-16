@@ -23,7 +23,6 @@ const SideBarSIngleProject = ({ projectItem }) => {
     }
   };
 
-
   return (
     <>
       <div className="sidebar__project-container sidebar__project-container--dropdown">
@@ -88,7 +87,7 @@ const SideBarSIngleProject = ({ projectItem }) => {
               <div className="sidebar-boxline2">
                 <div className="sidebar-line2"></div>
                 <p className="sideline-text ">
-                  <a href=""> View All</a>
+                  <a href={`/project/${projectItem.project_id}`}> View All</a>
                 </p>
               </div>
             </div>

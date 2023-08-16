@@ -10,6 +10,7 @@ import LeftBar from "../../components/LeftBar/LeftBar";
 import { useNavigate, useParams } from "react-router-dom";
 import AddNewTaskPopup from "../../components/AddNewTaskPopup/AddNewTaskPopup";
 import EditTaskPopup from "../../components/EditTaskPopup/EditTaskPopup";
+import EditProjectPopup from "../../components/EditProjectPopup/EditProjectPopup";
 
 const ProjectPage = () => {
   const navigate = useNavigate();
@@ -17,11 +18,16 @@ const ProjectPage = () => {
   const [projectData, setProjectData] = useState(null);
   const [addTaskPopup, setAddTaskPopup] = useState(false);
   const [editTaskPopup, setEditTaskPopup] = useState(false);
+  const [editProjectPopup, setEditProjectPopup] = useState(false);
 
   const [taskType, setTaskType] = useState("");
 
   const [menuTab, setMenuTab] = useState("overview");
   const { projectId } = useParams();
+
+
+
+
 
   const onChangeToOverview = () => {
     setMenuTab("overview");
@@ -32,6 +38,13 @@ const ProjectPage = () => {
 
   const onChangeToList = () => {
     setMenuTab("listview");
+  };
+
+  const openEditProject = (projectId) => {
+    setEditProjectPopup(true);
+
+    const newPath = `/project/${projectData.project_id}/`;
+    window.history.pushState(null, "", newPath);
   };
 
   useEffect(() => {
@@ -61,25 +74,29 @@ const ProjectPage = () => {
     fetchData();
   }, []);
 
-  useEffect(() => {
-    const findProjectById = async () => {
-      if (userData) {
-        const foundProject = userData.projects.find(
-          (project) => project.project_id === parseInt(projectId)
-        );
+  const findProjectById = async () => {
+    if (userData) {
+      const foundProject = userData.projects.find(
+        (project) => project.project_id === parseInt(projectId)
+      );
 
-        await new Promise((resolve) => setTimeout(resolve, 1000));
+      await new Promise((resolve) => setTimeout(resolve, 1000));
 
-        if (foundProject) {
-          setProjectData(foundProject);
-        } else {
-          setProjectData(null);
-        }
+      if (foundProject) {
+        setProjectData(foundProject);
+      } else {
+        setProjectData(null);
       }
-    };
+    }
+  };
+
+  useEffect(() => {
+  
 
     findProjectById();
   }, [userData, projectId]);
+
+
 
   if (!userData) {
     return (
@@ -97,16 +114,25 @@ const ProjectPage = () => {
     );
   }
 
-// console.log(projectData);
-
+  // console.log(projectData);
 
   return (
     <>
+      {editProjectPopup ? (
+        <EditProjectPopup
+          setEditProjectPopup={setEditProjectPopup}
+          projectData={projectData}
+          setProjectData={setProjectData}
+        />
+      ) : null}
+
       {addTaskPopup ? (
         <AddNewTaskPopup
           setAddTaskPopup={setAddTaskPopup}
           taskType={taskType}
           setTaskType={setTaskType}
+          setProjectData={setProjectData}
+
         />
       ) : null}
 
@@ -115,6 +141,9 @@ const ProjectPage = () => {
           setEditTaskPopup={setEditTaskPopup}
           taskType={taskType}
           setTaskType={setTaskType}
+          setProjectData={setProjectData}
+          findProjectById={findProjectById}
+
         />
       ) : null}
 
@@ -129,7 +158,6 @@ const ProjectPage = () => {
             </div>
             <p className="project__name">{projectData.project_name}</p>
           </div>
-
           <div className="project__menubar">
             <ul>
               <li
@@ -158,7 +186,7 @@ const ProjectPage = () => {
               </li>
             </ul>
 
-            <div className="project__edit-button">
+            <div onClick={openEditProject} className="project__edit-button">
               <div>
                 <img
                   className="project__edit-icon"
@@ -181,6 +209,9 @@ const ProjectPage = () => {
               editTaskPopup={editTaskPopup}
               setTaskType={setTaskType}
               projectData={projectData}
+              findProjectById={findProjectById}
+
+              
             />
           )}
 
