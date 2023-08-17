@@ -29,7 +29,7 @@ const SideBarSIngleProject = ({ projectItem }) => {
         <div className="sidebar__project-container2" onClick={projectQuickView}>
           <div
             className="sidebar__project-container--namebox"
-            style={{ backgroundColor: "red" }}
+            style={{ backgroundColor: projectItem.project_color }}
           >
             {projectItem.project_name[0]}
           </div>
@@ -47,10 +47,10 @@ const SideBarSIngleProject = ({ projectItem }) => {
           </div>
         </div>
 
-        {!projectItem.tasks.length == 0 ? (
-          <>
-            <div className={`line-box ${viewTasks}`}>
-              <div className="sidebar-line1 sidebar-line1--short"></div>
+        <div className={`line-box ${viewTasks}`}>
+          <div className="sidebar-line1 sidebar-line1--short"></div>
+          {!projectItem.tasks.length == 0 ? (
+            <>
               <div className="sidebar-boxline2">
                 <div className="sidebar-line2"></div>
                 <p
@@ -83,16 +83,17 @@ const SideBarSIngleProject = ({ projectItem }) => {
                     : ""}
                 </p>
               </div>
-              <div className="sidebar-line1"></div>
-              <div className="sidebar-boxline2">
-                <div className="sidebar-line2"></div>
-                <p className="sideline-text ">
-                  <a href={`/project/${projectItem.project_id}`}> View All</a>
-                </p>
-              </div>
-            </div>
-          </>
-        ) : null}
+            </>
+          ) : null}
+          <div className="sidebar-line1"></div>
+          <div className="sidebar-boxline2">
+            <div className="sidebar-line2"></div>
+
+            <p className="sideline-text ">
+              <a href={`/project/${projectItem.project_id}`}> View Project</a>
+            </p>
+          </div>
+        </div>
       </div>
     </>
   );

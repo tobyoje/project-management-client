@@ -38,13 +38,17 @@ const LeftBar = ({ userData }) => {
     }, 1000);
   };
 
+  // console.log(userData);
+
   return (
     <>
       <div className="sidebar">
         <div className="sidebar__profile">
           <img
             className="sidebar__profile-photo"
-            src={profileIMG}
+            src={
+              "https://source.boringavatars.com/bauhaus/?colors=264653,2a9d8f,e9c46a,f4a261,e76f51"
+            }
             alt="Profile"
           />
           <div>

@@ -47,6 +47,31 @@ const AddProject = () => {
       errors["error_required"] = true;
     }
 
+    if (!newData.projectTitle) {
+      formIsValid = false;
+      errors["error_required"] = true;
+    }
+
+    if (!newData.projectDescription) {
+      formIsValid = false;
+      errors["error_required"] = true;
+    }
+
+    if (!newData.projectPriority) {
+      formIsValid = false;
+      errors["error_required"] = true;
+    }
+
+    if (!newData.projectStartDate) {
+      formIsValid = false;
+      errors["error_required"] = true;
+    }
+
+    if (!newData.projectEndDate) {
+      formIsValid = false;
+      errors["error_required"] = true;
+    }
+
     if (!formIsValid) {
       return setFormErrors(errors);
     }
@@ -133,6 +158,7 @@ const AddProject = () => {
                 {formErrors.error_required && (
                   <p className="form-error">All fields are required</p>
                 )}
+
                 <div
                   onClick={handleAddProject}
                   className="project-add__form--submit"

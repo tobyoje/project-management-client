@@ -22,12 +22,8 @@ const ProjectPage = () => {
 
   const [taskType, setTaskType] = useState("");
 
-  const [menuTab, setMenuTab] = useState("overview");
+  const [menuTab, setMenuTab] = useState("gridview");
   const { projectId } = useParams();
-
-
-
-
 
   const onChangeToOverview = () => {
     setMenuTab("overview");
@@ -91,12 +87,8 @@ const ProjectPage = () => {
   };
 
   useEffect(() => {
-  
-
     findProjectById();
   }, [userData, projectId]);
-
-
 
   if (!userData) {
     return (
@@ -132,7 +124,7 @@ const ProjectPage = () => {
           taskType={taskType}
           setTaskType={setTaskType}
           setProjectData={setProjectData}
-
+          projectId={projectId}
         />
       ) : null}
 
@@ -143,7 +135,6 @@ const ProjectPage = () => {
           setTaskType={setTaskType}
           setProjectData={setProjectData}
           findProjectById={findProjectById}
-
         />
       ) : null}
 
@@ -153,11 +144,15 @@ const ProjectPage = () => {
         <Header />
         <div className="project__content">
           <div className="project__title-container">
-            <div className="project__name-avatar">
+            <div
+              className="project__name-avatar"
+              style={{ backgroundColor: projectData.project_color }}
+            >
               {projectData.project_name[0]}
             </div>
             <p className="project__name">{projectData.project_name}</p>
           </div>
+
           <div className="project__menubar">
             <ul>
               <li
@@ -210,8 +205,6 @@ const ProjectPage = () => {
               setTaskType={setTaskType}
               projectData={projectData}
               findProjectById={findProjectById}
-
-              
             />
           )}
 

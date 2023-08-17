@@ -29,6 +29,7 @@
   &__name-avatar {
     font-size: 3rem;
     font-weight: 400;
+    text-transform: uppercase;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -37,6 +38,7 @@
     background-color: #a3a847;
     margin-right: 2rem;
     border-radius: 10px;
+    
   }
 
   &__name {
@@ -67,6 +69,7 @@
       font-size: 1.4rem;
       padding-bottom: 3rem;
       letter-spacing: 0.05rem;
+      cursor: pointer;
 
       &:hover {
         color: #006cff;
@@ -87,6 +90,7 @@
     padding: 1rem 2.5rem;
     font-size: 1.4rem;
     border-radius: 10px 0 0 10px;
+    cursor: pointer;
   }
 
   &__edit-icon {
@@ -107,12 +111,9 @@
     border-radius: 2rem;
 
     @include media-widescreen {
-        width: 50rem;
-        margin-right: 3rem;
-
-  
+      width: 50rem;
+      margin-right: 3rem;
     }
-
   }
 
   &__card-top {
@@ -199,29 +200,29 @@
     }
 
     &--low {
-        background-color: rgba(0, 108, 255, 0.12);
-        border: 1px solid #006CFF;
-        color: #006CFF;
-      }
+      background-color: rgba(0, 108, 255, 0.12);
+      border: 1px solid #006cff;
+      color: #006cff;
+    }
   }
 
   &__task-container {
     margin: 2rem 2rem;
-    background-color: rgba(31, 32, 35, 0.60);
+    background-color: rgba(31, 32, 35, 0.6);
     padding: 2rem;
     border-radius: 10px;
     position: relative;
 
-    &:hover{
-        background-color: #1f2023;
+    &:hover {
+      background-color: #1f2023;
     }
   }
 
   &__task-title {
     margin-bottom: 4rem;
     font-size: 1.4rem;
-    &--done{
-        text-decoration: line-through;
+    &--done {
+      text-decoration: line-through;
     }
   }
 

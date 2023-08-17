@@ -113,6 +113,14 @@ const LoginPage = () => {
               Login
             </div>
           </form>
+          <div className="login__register-container">
+            <p>
+              Dont have an account?
+              <a className="login__register-link" href="/register">
+                &nbsp; Regsiter
+              </a>
+            </p>
+          </div>
         </div>
       </div>
     </>

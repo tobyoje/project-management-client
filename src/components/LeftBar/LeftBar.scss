@@ -97,13 +97,12 @@
     margin-top: 1rem;
     height: 40rem;
     overflow: scroll;
-    
 
     @include media-widescreen {
       height: 90rem;
     }
 
-    &--empty{
+    &--empty {
       padding: 1.5rem 2rem;
     }
   }
@@ -122,6 +121,7 @@
       align-items: center;
       font-size: 2rem;
       font-weight: 400;
+      text-transform: uppercase;
       background-color: #d35400;
       width: 4.4rem;
       height: 4.2rem;
@@ -152,6 +152,7 @@
 
     &--dropdown {
       flex-direction: column;
+      cursor: pointer;
     }
   }
 
@@ -206,7 +207,7 @@
   flex-direction: column;
   margin-left: 2.2rem;
 
-  &--disable{
+  &--disable {
     display: none;
   }
 }
@@ -251,7 +252,7 @@
   padding: 0;
   color: white;
   letter-spacing: 0.02rem;
-
+  cursor: pointer;
 
 
   &--icon {

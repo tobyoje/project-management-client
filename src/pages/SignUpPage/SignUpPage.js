@@ -230,6 +230,14 @@ const SignUpPage = () => {
               Create Account
             </div>
           </form>
+          <div className="login__register-container">
+            <p>
+              Dont have an account?
+              <a className="login__register-link" href="/login">
+                &nbsp; Login
+              </a>
+            </p>
+          </div>
         </div>
       </div>
     </>

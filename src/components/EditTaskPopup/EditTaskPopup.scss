@@ -88,16 +88,17 @@
         }
       }
     }
-&--category{
-  display: flex;
-  label  {
-    margin-right: 2rem;
-    margin-bottom: 1.5rem;
-  }
-  input {
-    margin-right: 1rem;
-  }
-}
+    &--category {
+      display: flex;
+      margin-top: 1rem;
+      label {
+        margin-right: 2rem;
+        margin-bottom: 1.5rem;
+      }
+      input {
+        margin-right: 1rem;
+      }
+    }
     &--other-info {
       display: flex;
       flex-direction: column;
@@ -145,7 +146,7 @@
     }
   }
 
-  &__pr-label {
+  &__pr1-label {
     display: flex;
     input[type="radio"]:checked + label.priority-high {
       background-color: #ff0000;
@@ -173,36 +174,22 @@
       display: flex;
       justify-content: center;
       align-items: center;
+      cursor: pointer;
     }
 
     label.priority-high {
       background-color: rgba(255, 0, 0, 0.12);
       border: 1px solid #ff0000;
-
-      &:hover {
-        background-color: #ff0000;
-        color: white;
-      }
     }
 
     label.priority-medium {
       background-color: rgba(243, 163, 47, 0.12);
       border: 1px solid #f3a32f;
-
-      &:hover {
-        background-color: #f3a32f;
-        color: white;
-      }
     }
 
     label.priority-low {
       background-color: rgba(0, 108, 255, 0.12);
       border: 1px solid #006cff;
-
-      &:hover {
-        background-color: #006cff;
-        color: white;
-      }
     }
   }
 }

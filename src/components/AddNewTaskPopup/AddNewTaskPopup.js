@@ -4,12 +4,17 @@ import { useState } from "react";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 
-const AddNewTaskPopup = ({ setAddTaskPopup, taskType, setProjectData }) => {
+const AddNewTaskPopup = ({
+  setAddTaskPopup,
+  taskType,
+  setProjectData,
+  projectId,
+}) => {
   const navigate = useNavigate();
 
-  const path = window.location.pathname;
-
-  const projectId = path.split("/").pop();
+  // const path = window.location.pathname;
+  // const projectId = path.split("/").pop();
+  // console.log(projectId);
 
   const closePopup = () => {
     setAddTaskPopup(false);
@@ -37,25 +42,45 @@ const AddNewTaskPopup = ({ setAddTaskPopup, taskType, setProjectData }) => {
 
   const handleAddTask = (event) => {
     event.preventDefault();
-    // setFormErrors({});
+    setFormErrors({});
 
-    // let formIsValid = true;
+    let formIsValid = true;
 
-    // const errors = {};
+    const errors = {};
 
-    // if (
-    //   !newData.taskTitle &
-    //   !newData.taskPriority &
-    //   !newData.taskStartDate &
-    //   !newData.taskEndDate
-    // ) {
-    //   formIsValid = false;
-    //   errors["error_required"] = true;
-    // }
+    if (
+      !newData.taskTitle &
+      !newData.taskPriority &
+      !newData.taskStartDate &
+      !newData.taskEndDate
+    ) {
+      formIsValid = false;
+      errors["error_required"] = true;
+    }
 
-    // if (!formIsValid) {
-    //   return setFormErrors(errors);
-    // }
+    if (!newData.taskTitle) {
+      formIsValid = false;
+      errors["error_required"] = true;
+    }
+
+    if (!newData.taskPriority) {
+      formIsValid = false;
+      errors["error_required"] = true;
+    }
+
+    if (!newData.taskStartDate) {
+      formIsValid = false;
+      errors["error_required"] = true;
+    }
+
+    if (!newData.taskEndDate) {
+      formIsValid = false;
+      errors["error_required"] = true;
+    }
+
+    if (!formIsValid) {
+      return setFormErrors(errors);
+    }
 
     const newTaskInfo = {
       task_name: newData.taskTitle,
@@ -175,6 +200,10 @@ const AddNewTaskPopup = ({ setAddTaskPopup, taskType, setProjectData }) => {
                 </div>
               </div>
             </div>
+            {formErrors.error_required && (
+              <p className="form-error">All fields are required</p>
+            )}
+
             <div
               onClick={handleAddTask}
               className="popup-container__form--submit"

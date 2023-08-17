@@ -58,31 +58,47 @@ const EditProjectPopup = ({
 
   const handleAddTask = (event) => {
     event.preventDefault();
-    // setFormErrors({});
-    // let formIsValid = true;
-    // const errors = {};
+    setFormErrors({});
+    let formIsValid = true;
+    const errors = {};
+
     // if (
-    //   !newData.taskTitle &
-    //   !newData.taskPriority &
-    //   !newData.taskStartDate &
-    //   !newData.taskEndDate
+    //   !newData.projectTitle &
+    //   !newData.projectDescription &
+    //   !newData.project_priority &
+    //   !newData.project_startdate &
+    //   !newData.projectEndDate
     // ) {
     //   formIsValid = false;
     //   errors["error_required"] = true;
     // }
-    // if (!formIsValid) {
-    //   return setFormErrors(errors);
-    // }
+
+    const removeTimeZoneSuffix = (dateString) => {
+      return dateString.substring(0, dateString.length - 5);
+    };
+
     const updatedProjectInfo = {
       project_name: newData.projectTitle || projectData.project_name,
       project_description:
         newData.projectDescription || projectData.project_description,
       project_priority: newData.projectPriority || projectData.project_priority,
       project_startdate:
-        newData.projectStartDate || projectData.project_startdate,
-      project_enddate: newData.projectEndDate || projectData.project_enddate,
+        newData.project_priority ||
+        removeTimeZoneSuffix(projectData.project_startdate),
+      project_enddate:
+        newData.projectEndDate ||
+        removeTimeZoneSuffix(projectData.project_enddate),
       project_id: projectData.project_id,
     };
+
+    if (!updatedProjectInfo) {
+      errors["error_required"] = true;
+    }
+
+    if (!formIsValid) {
+      return setFormErrors(errors);
+    }
+
     axios
       .put(`http://localhost:8080/api/user/edit-project/`, updatedProjectInfo, {
         headers: {
@@ -183,7 +199,7 @@ const EditProjectPopup = ({
                   <input
                     type="datetime-local"
                     name="projectStartDate"
-                    // defaultValue={formatDatetime(projectData.project_startdate)}
+                    defaultValue={formatDatetime(projectData.project_startdate)}
                     onChange={(event) => handleChange(event)}
                   />
                 </div>
@@ -193,12 +209,15 @@ const EditProjectPopup = ({
                   <input
                     type="datetime-local"
                     name="projectEndDate"
-                    // defaultValue={formatDatetime(projectData.project_startdate)}
+                    defaultValue={formatDatetime(projectData.project_startdate)}
                     onChange={(event) => handleChange(event)}
                   />
                 </div>
               </div>
             </div>
+            {formErrors.error_required && (
+              <p className="form-error">All fields are required</p>
+            )}
             <div
               onClick={handleAddTask}
               className="popup-container__form--submit"

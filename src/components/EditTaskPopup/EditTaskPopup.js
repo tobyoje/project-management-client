@@ -97,11 +97,6 @@ const EditTaskPopup = ({
 
   const handleEditTask = (event) => {
     event.preventDefault();
-    // setFormErrors({});
-
-    // let formIsValid = true;
-
-    // const errors = {};
 
     // if (
     //   !newData.taskTitle &
@@ -113,12 +108,8 @@ const EditTaskPopup = ({
     //   errors["error_required"] = true;
     // }
 
-    // if (!formIsValid) {
-    //   return setFormErrors(errors);
-    // }
-
     const removeTimeZoneSuffix = (dateString) => {
-      return dateString.substring(0, dateString.length - 5); // Remove the last 5 characters (.000Z)
+      return dateString.substring(0, dateString.length - 5);
     };
 
     const updatedTaskInfo = {
@@ -131,6 +122,21 @@ const EditTaskPopup = ({
         newData.taskEndDate || removeTimeZoneSuffix(taskInfo.task_enddate),
       task_id: taskId,
     };
+    setFormErrors({});
+
+    let formIsValid = true;
+
+    const errors = {};
+
+    if (!updatedTaskInfo) {
+      errors["error_required"] = true;
+    }
+
+    if (!formIsValid) {
+      return setFormErrors(errors);
+    }
+
+    console.log(updatedTaskInfo);
 
     axios
       .put(`http://localhost:8080/api/user/edit-task/`, updatedTaskInfo, {
@@ -188,6 +194,7 @@ const EditTaskPopup = ({
 
             <div>
               <label>Task Category</label>
+
               <div className="popup-container__form--category">
                 <label htmlFor="task1">
                   <input
@@ -196,6 +203,7 @@ const EditTaskPopup = ({
                     id="task1"
                     name="taskCategory"
                     value="To Do"
+                    defaultChecked={taskInfo.task_category === "To Do"}
                   />
                   To Do
                 </label>
@@ -208,6 +216,7 @@ const EditTaskPopup = ({
                     id="task2"
                     name="taskCategory"
                     value="In Progress"
+                    defaultChecked={taskInfo.task_category === "In Progress"}
                   />
                   In Progress
                 </label>
@@ -220,6 +229,7 @@ const EditTaskPopup = ({
                     id="task3"
                     name="taskCategory"
                     value="Completed"
+                    defaultChecked={taskInfo.task_category === "Completed"}
                   />
                   Completed
                 </label>
@@ -229,13 +239,12 @@ const EditTaskPopup = ({
             <div className="popup-container__form--other-info">
               <label>Task Priority</label>
 
-              <div className="popup-container__pr-label">
+              <div className="popup-container__pr1-label">
                 <div>
                   <input
                     type="radio"
                     name="taskPriority"
                     id="High"
-                    // checked={taskInfo.task_priority === "High"}
                     onChange={(event) => handleChange(event)}
                   />
                   <label className="priority-high" htmlFor="High">
@@ -248,7 +257,6 @@ const EditTaskPopup = ({
                     type="radio"
                     name="taskPriority"
                     id="Medium"
-                    // checked={taskInfo.task_priority === "Medium"}
                     onChange={(event) => handleChange(event)}
                   />
                   <label className="priority-medium" htmlFor="Medium">
@@ -261,7 +269,6 @@ const EditTaskPopup = ({
                     type="radio"
                     name="taskPriority"
                     id="Low"
-                    // checked={taskInfo.task_priority === "Low"}
                     onChange={(event) => handleChange(event)}
                   />
                   <label className="priority-low" htmlFor="Low">
@@ -292,6 +299,9 @@ const EditTaskPopup = ({
                 </div>
               </div>
             </div>
+            {formErrors.error_required && (
+              <p className="form-error">All fields are required</p>
+            )}
             <div
               onClick={handleEditTask}
               className="popup-container__form--submit"

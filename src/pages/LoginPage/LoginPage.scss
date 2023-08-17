@@ -1,12 +1,24 @@
+@use "../../styles/partials/responsive" as *;
+
 .login {
   background-color: #121212;
   color: white;
   height: 100vh;
-  width: 100vw;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  padding: 5rem;
+
+  @include media-tablet {
+    width: 100vw;
+    padding: 0;
+  }
+
+  @include media-desktop {
+    padding: 0;
+    width: 100vw;
+  }
 
   &__title {
     font-size: 2.5rem;
@@ -86,6 +98,14 @@
       margin-top: 2rem;
       margin-bottom: 2rem;
     }
+  }
+  &__register-container {
+    display: flex;
+    justify-content: center;
+  }
+  &__register-link {
+    color: #006cff;
+    cursor: pointer;
   }
 }
 
