@@ -117,12 +117,18 @@ const EditTaskPopup = ({
     //   return setFormErrors(errors);
     // }
 
+    const removeTimeZoneSuffix = (dateString) => {
+      return dateString.substring(0, dateString.length - 5); // Remove the last 5 characters (.000Z)
+    };
+
     const updatedTaskInfo = {
       task_name: newData.taskTitle || taskInfo.task_name,
       task_category: newData.taskCategory || taskType,
       task_priority: newData.taskPriority || taskInfo.task_priority,
-      task_startdate: newData.taskStartDate || taskInfo.task_startdate,
-      task_enddate: newData.taskEndDate || taskInfo.task_enddate,
+      task_startdate:
+        newData.taskStartDate || removeTimeZoneSuffix(taskInfo.task_startdate),
+      task_enddate:
+        newData.taskEndDate || removeTimeZoneSuffix(taskInfo.task_enddate),
       task_id: taskId,
     };
 
@@ -133,7 +139,6 @@ const EditTaskPopup = ({
         },
       })
       .then((response) => {
-        console.log(response.data);
         setProjectData(response.data);
         const currentPathname = window.location.pathname;
 
@@ -271,7 +276,7 @@ const EditTaskPopup = ({
                   <input
                     type="datetime-local"
                     name="taskStartDate"
-                    // defaultValue={formatDatetime(taskInfo.task_startdate)}
+                    defaultValue={formatDatetime(taskInfo.task_startdate)}
                     onChange={(event) => handleChange(event)}
                   />
                 </div>
@@ -281,7 +286,7 @@ const EditTaskPopup = ({
                   <input
                     type="datetime-local"
                     name="taskEndDate"
-                    // defaultValue={formatDatetime(taskInfo.task_enddate)}
+                    defaultValue={formatDatetime(taskInfo.task_enddate)}
                     onChange={(event) => handleChange(event)}
                   />
                 </div>

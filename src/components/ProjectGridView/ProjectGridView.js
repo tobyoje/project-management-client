@@ -10,24 +10,26 @@ const ProjectGridView = ({
   editTaskPopup,
   setEditTaskPopup,
   setTaskType,
-  findProjectById
-
+  findProjectById,
 }) => {
   const [taskId, setTaskId] = useState("");
 
-  const openAddTaskTodo = () => {
+  const openAddTaskTodo = (taskId) => {
     setAddTaskPopup(true);
     setTaskType("To Do");
+    setTaskId(taskId);
   };
 
-  const openAddTaskProgress = () => {
+  const openAddTaskProgress = (taskId) => {
     setAddTaskPopup(true);
     setTaskType("In Progress");
+    setTaskId(taskId);
   };
 
-  const openAddTaskCompleted = () => {
+  const openAddTaskCompleted = (taskId) => {
     setAddTaskPopup(true);
     setTaskType("Completed");
+    setTaskId(taskId);
   };
 
   const calculateTimeDifference = (startDate, endDate) => {
@@ -37,9 +39,6 @@ const ProjectGridView = ({
     const days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
     return { days };
   };
-
-
- console.log(projectData.tasks);
 
   projectData.tasks.sort((a, b) => {
     if (a.task_id !== b.task_id) {
@@ -69,12 +68,10 @@ const ProjectGridView = ({
     }
   }
 
-
-
-
   const openEditTaskTodo = (taskId) => {
     setEditTaskPopup(true);
     setTaskType("To Do");
+    setTaskId(taskId);
 
     const newPath = `/project/${projectData.project_id}/#${taskId}`;
     window.history.pushState(null, "", newPath);
@@ -92,14 +89,11 @@ const ProjectGridView = ({
   const openEditTaskCompleted = (taskId) => {
     setEditTaskPopup(true);
     setTaskType("Completed");
+    setTaskId(taskId);
 
     const newPath = `/project/${projectData.project_id}/#${taskId}`;
     window.history.pushState(null, "", newPath);
   };
-
-
-
-  
 
   return (
     <>
