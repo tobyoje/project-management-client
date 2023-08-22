@@ -4,18 +4,17 @@
   background-color: #121212;
   color: white;
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
   align-items: center;
-  padding: 3rem;
+  padding: 3rem 1.5rem;
   position: fixed;
   z-index: 1;
-  right: 0rem;
+  left: 0rem;
   width: 100%;
- 
   box-shadow: 0 -6px 10px 5px rgba(0, 0, 0, 0.2);
 
   @include media-desktop {
-    margin-left: 30rem;
+    padding: 3rem 2rem 3rem 32rem;
   }
 
   a {
@@ -26,16 +25,28 @@
     margin-left: 32rem;
   }
 
+  &__right {
+    display: flex;
+  }
+
   &__button {
     background-color: #006cff;
     padding: 1rem 1.5rem;
     font-weight: 500;
     border-radius: 1rem;
-    margin-right: 4rem;
+    margin-right: 1rem;
+
+    @include media-tablet {
+      margin-right: 4rem;
+    }
   }
 
   &__icon {
-    width: 3rem;
+    width: 2.5rem;
     cursor: pointer;
+
+    @include media-desktop {
+      width: 3rem;
+    }
   }
 }

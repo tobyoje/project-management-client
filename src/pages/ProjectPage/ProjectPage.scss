@@ -33,17 +33,23 @@
   }
 
   &__name-avatar {
-    font-size: 3rem;
+    font-size: 2.4rem;
     font-weight: 400;
     text-transform: uppercase;
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 6rem;
-    height: 6rem;
+    width: 4rem;
+    height: 4rem;
     background-color: #a3a847;
     margin-right: 2rem;
     border-radius: 10px;
+
+    @include media-desktop {
+      font-size: 3rem;
+      width: 6rem;
+      height: 6rem;
+    }
   }
 
   &__name {
