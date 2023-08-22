@@ -227,15 +227,15 @@ const AddProject = () => {
                 </div>
               </div>
               <div
-                  onClick={handleAddProject}
-                  className="project-add__form--submit-mobile"
-                >
-                  Create
-                </div>
-                <p className="project-add__form--note-mobile">
-                  After you create project, add tasks on the project page and
-                  set priorities to them.
-                </p>
+                onClick={handleAddProject}
+                className="project-add__form--submit-mobile"
+              >
+                Create
+              </div>
+              <p className="project-add__form--note-mobile">
+                After you create project, add tasks on the project page and set
+                priorities to them.
+              </p>
             </form>
           </div>
         </div>

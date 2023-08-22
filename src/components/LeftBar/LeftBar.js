@@ -38,7 +38,6 @@ const LeftBar = ({ userData }) => {
     }, 1000);
   };
 
-  // console.log(userData);
 
   return (
     <>

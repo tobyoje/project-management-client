@@ -10,10 +10,9 @@
   justify-content: center;
   z-index: 3;
 
-@include media-desktop{
-  width: 100vw;
-
-}
+  @include media-desktop {
+    width: 100vw;
+  }
 
   &__content {
     display: flex;
@@ -23,20 +22,17 @@
     border-radius: 10px;
     color: white;
     padding: 4rem 2rem;
-width: 100%;
+    width: 100%;
 
-@include media-tablet{
-    height: 80rem;
+    @include media-tablet {
+      height: 80rem;
+    }
 
-}
+    @include media-desktop {
+      height: 68rem;
 
-    @include media-desktop{
-        height: 68rem;
-
-        width: 50%;
-        padding: 5rem;
-
-
+      width: 50%;
+      padding: 5rem;
     }
   }
 
@@ -50,7 +46,6 @@ width: 100%;
 
       @include media-tablet {
         width: 2.5rem;
-
       }
     }
   }
@@ -59,8 +54,7 @@ width: 100%;
     font-size: 1.4rem;
 
     @include media-tablet {
-        font-size: 2rem;
-
+      font-size: 2rem;
     }
   }
 
@@ -161,7 +155,7 @@ width: 100%;
     margin-top: 1rem;
 
     @include media-desktop {
-        flex-direction: row;
+      flex-direction: row;
     }
 
     &--col {
@@ -202,9 +196,8 @@ width: 100%;
     }
 
     @include media-desktop {
-        flex-direction: row;
+      flex-direction: row;
     }
-
 
     label {
       border-radius: 5px;
@@ -219,7 +212,6 @@ width: 100%;
 
       @include media-desktop {
         width: 8rem;
-
       }
     }
 
