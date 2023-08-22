@@ -12,9 +12,6 @@ const AddNewTaskPopup = ({
 }) => {
   const navigate = useNavigate();
 
-  // const path = window.location.pathname;
-  // const projectId = path.split("/").pop();
-  // console.log(projectId);
 
   const closePopup = () => {
     setAddTaskPopup(false);

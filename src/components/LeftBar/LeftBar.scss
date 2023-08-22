@@ -47,6 +47,8 @@
   }
 
   &__my-projects {
+    width: 100%;
+
     color: white;
   }
 
@@ -102,6 +104,7 @@
     margin-top: 1rem;
     height: 40rem;
     overflow: scroll;
+    width: 100%;
 
     @include media-widescreen {
       height: 90rem;

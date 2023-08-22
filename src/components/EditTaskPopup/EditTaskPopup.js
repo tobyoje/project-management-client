@@ -14,16 +14,11 @@ const EditTaskPopup = ({
 
   const [taskInfo, setTaskInfo] = useState(null);
 
-  // Get the current URL hash
   const hash = window.location.hash;
 
-  // Extract the taskId from the hash
-  const taskId = hash.slice(1); // Remove the leading hash symbol
-
-  // Get the current URL path
+  const taskId = hash.slice(1); 
   const path = window.location.pathname;
 
-  // Extract the projectId from the URL path
   const projectId = path.match(/\/project\/(\d+)/)[1];
 
   const formatDatetime = (datetime) => {
