@@ -11,8 +11,12 @@
   z-index: 1;
   right: 0rem;
   width: 100%;
-  margin-left: 30rem;
+ 
   box-shadow: 0 -6px 10px 5px rgba(0, 0, 0, 0.2);
+
+  @include media-desktop {
+    margin-left: 30rem;
+  }
 
   a {
     color: white;

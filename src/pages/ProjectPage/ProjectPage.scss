@@ -5,8 +5,11 @@
   flex-direction: column;
   width: 100%;
   background-color: #121212;
-  margin-left: 30rem;
   height: 400rem;
+
+  @include media-desktop {
+    margin-left: 30rem;
+  }
 
   @include media-widescreen {
     margin-left: 32rem;
@@ -23,7 +26,11 @@
   &__title-container {
     display: flex;
     align-items: center;
-    margin: 0 3rem;
+    margin: 0 1.5rem;
+
+    @include media-desktop {
+      margin: 0 3rem;
+    }
   }
 
   &__name-avatar {
@@ -38,7 +45,6 @@
     background-color: #a3a847;
     margin-right: 2rem;
     border-radius: 10px;
-    
   }
 
   &__name {
@@ -48,38 +54,63 @@
 
   &__menubar {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
+    flex-direction: column;
+
     background-color: #1f2023;
-    margin: 3rem 3rem;
+    margin: 3rem 1.5rem;
     border-radius: 10px;
+
+    @include media-desktop {
+      justify-content: space-between;
+      align-items: center;
+      flex-direction: row;
+      margin: 3rem 3rem;
+    }
 
     ul {
       display: flex;
+      flex-direction: column;
       padding-top: 3rem;
-
       margin: 0;
       //   padding: 0;
+      @include media-desktop {
+        flex-direction: row;
+      }
     }
 
     li {
       list-style: none;
-      margin-right: 4rem;
       text-transform: uppercase;
       font-size: 1.4rem;
-      padding-bottom: 3rem;
       letter-spacing: 0.05rem;
+      margin-bottom: 2rem;
       cursor: pointer;
+
+      @include media-desktop {
+        margin-right: 4rem;
+        margin-bottom: 0;
+        padding-bottom: 3rem;
+      }
 
       &:hover {
         color: #006cff;
-        border-bottom: 2.5px solid #006cff;
+        border-right: 4px solid #006cff;
+
+        @include media-desktop {
+          border-bottom: 2.5px solid #006cff;
+          border-right: 0;
+        }
       }
     }
 
     &--active {
       color: #006cff;
-      border-bottom: 2.5px solid #006cff;
+      border-right: 4px solid #006cff;
+
+      @include media-desktop {
+        border-bottom: 2.5px solid #006cff;
+        border-right: 0;
+      }
     }
   }
 
@@ -89,8 +120,12 @@
     background-color: #006cff;
     padding: 1rem 2.5rem;
     font-size: 1.4rem;
-    border-radius: 10px 0 0 10px;
+    border-radius: 0 0 0 10px;
     cursor: pointer;
+
+    @include media-desktop {
+      border-radius: 10px 0 0 10px;
+    }
   }
 
   &__edit-icon {
@@ -99,16 +134,27 @@
   }
 
   &__view {
-    margin: 0 3rem;
+    margin: 0 1.5rem;
     display: flex;
+    flex-direction: column;
+
+    @include media-desktop {
+      flex-direction: row;
+      margin: 0 3rem;
+    }
   }
 
   &__card {
     background-color: rgba(31, 32, 35, 0.4);
-    width: 30rem;
     padding-top: 2rem;
-    margin-right: 2rem;
+    margin-bottom: 2rem;
     border-radius: 2rem;
+
+    @include media-desktop {
+      margin-bottom: 0;
+      margin-right: 2rem;
+      width: 30rem;
+    }
 
     @include media-widescreen {
       width: 50rem;
@@ -121,6 +167,7 @@
     justify-content: space-between;
     align-items: center;
     padding-right: 2rem;
+    margin-bottom: 2rem;
   }
 
   &__card-label {
@@ -207,7 +254,7 @@
   }
 
   &__task-container {
-    margin: 2rem 2rem;
+    margin: 0 2rem 2rem 2rem;
     background-color: rgba(31, 32, 35, 0.6);
     padding: 2rem;
     border-radius: 10px;

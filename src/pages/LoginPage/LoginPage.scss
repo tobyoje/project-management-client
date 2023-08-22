@@ -8,17 +8,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 5rem;
-
-  @include media-tablet {
-    width: 100vw;
-    padding: 0;
-  }
-
-  @include media-desktop {
-    padding: 0;
-    width: 100vw;
-  }
+  width: 100vw;
 
   &__title {
     font-size: 2.5rem;
@@ -56,7 +46,11 @@
       padding: 1.2rem 2rem;
       border-radius: 10px;
       margin-bottom: 2rem;
-      width: 40rem;
+      width: 25rem;
+
+      @include media-tablet {
+        width: 40rem;
+      }
 
       &:focus {
         border: 0;

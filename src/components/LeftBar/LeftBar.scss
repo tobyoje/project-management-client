@@ -9,6 +9,11 @@
   position: fixed;
   height: 100vh;
   z-index: 2;
+  display: none;
+
+  @include media-desktop {
+    display: flex;
+  }
 
   @include media-widescreen {
     width: 32rem;
@@ -253,7 +258,6 @@
   color: white;
   letter-spacing: 0.02rem;
   cursor: pointer;
-
 
   &--icon {
     margin-right: 2rem;

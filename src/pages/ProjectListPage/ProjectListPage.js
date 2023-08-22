@@ -75,9 +75,27 @@ const ProjectListPage = () => {
       <LeftBar userData={userData} />
       <div className="projectlist">
         <Header />
-        
 
         <div className="projectlist__content">
+          <div className="projectlist__profile-mobile">
+            <div>
+              <div>
+                <p className="sidebar__name">{userData.user.name}</p>
+                <p className="sidebar__position">{userData.user.position}</p>
+              </div>
+            </div>
+
+            <div>
+              <img
+                className="projectlist__profile-image"
+                src={
+                  "https://source.boringavatars.com/bauhaus/?colors=264653,2a9d8f,e9c46a,f4a261,e76f51"
+                }
+                alt="Profile"
+              />
+            </div>
+          </div>
+
           <div className="projectlist__counter">
             <p className="projectlist__counter--title">
               Total Projects -&nbsp;

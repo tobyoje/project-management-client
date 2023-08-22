@@ -1,92 +1,101 @@
+@use "../../styles/partials/responsive" as *;
+
 .register {
-    background-color: #121212;
-    color: white;
+  background-color: #121212;
+  color: white;
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 0;
+
+  @include media-tablet {
     height: 100vh;
-    width: 100vw;
+    padding: 0;
+  }
+
+  &__title {
+    font-size: 2.5rem;
+    font-weight: 500;
+    margin-bottom: 2rem;
+  }
+
+  &__form {
+    font-family: poppins;
+    letter-spacing: 0.02rem;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
-  
-    &__title {
-      font-size: 2.5rem;
-      font-weight: 500;
-      margin-bottom: 2rem;
-    }
-  
-    &__form {
-      font-family: poppins;
-      letter-spacing: 0.02rem;
+    margin-top: 4rem;
+
+    &--field {
       display: flex;
       flex-direction: column;
-      margin-top: 4rem;
-  
-      &--field {
-        display: flex;
-        flex-direction: column;
-        margin-bottom: 2rem;
-      }
-  
-      button {
-        border: 0;
-        color: white;
-      }
-  
-      label {
-        margin-bottom: 1.5rem;
-      }
-  
-      input {
-        font-family: poppins;
-        letter-spacing: 0.02rem;
-        border: 0;
-        background-color: #171819;
-        color: white;
-        padding: 1.2rem 2rem;
-        border-radius: 10px;
-        margin-bottom: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    button {
+      border: 0;
+      color: white;
+    }
+
+    label {
+      margin-bottom: 1.5rem;
+    }
+
+    input {
+      font-family: poppins;
+      letter-spacing: 0.02rem;
+      border: 0;
+      background-color: #171819;
+      color: white;
+      padding: 1.2rem 2rem;
+      border-radius: 10px;
+      margin-bottom: 1rem;
+      width: 25rem;
+
+      @include media-tablet {
         width: 40rem;
-  
-        &:focus {
-          border: 0;
-          outline: none;
-        }
-  
-        &:active {
-          border: 0;
-        }
-  
-        &:invalid {
-          border: 1px solid red;
-        }
-  
-        &--error {
-          border: 1px solid red;
-          padding-top: 1rem;
-        }
       }
-  
-      &--submit {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background-color: #006cff;
-        font-size: 1.4rem;
-        height: 4.2rem;
-        border-radius: 10px;
-        margin-top: 2rem;
-        margin-bottom: 2rem;
+      &:focus {
+        border: 0;
+        outline: none;
+      }
+
+      &:active {
+        border: 0;
+      }
+
+      &:invalid {
+        border: 1px solid red;
+      }
+
+      &--error {
+        border: 1px solid red;
+        padding-top: 1rem;
       }
     }
-  }
-  
-  .form-error {
-    color: red;
-    font-size: 1rem;
-  }
-  
 
-  .input-error {
-    border: 1px solid red;
-    padding-top: 1rem;
+    &--submit {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: #006cff;
+      font-size: 1.4rem;
+      height: 4.2rem;
+      border-radius: 10px;
+      margin-top: 2rem;
+      margin-bottom: 2rem;
+    }
   }
+}
+
+.form-error {
+  color: red;
+  font-size: 1rem;
+}
+
+.input-error {
+  border: 1px solid red;
+  padding-top: 1rem;
+}
