@@ -49,7 +49,7 @@ const ProjectListPage = () => {
     }
 
     axios
-      .get(`http://localhost:8080/api/user/${userId}`, {
+      .get(`${process.env.REACT_APP_API_BASE_URL}/api/user/${userId}`, {
         headers: {
           Authorization: `Bearer ${token}`, // Attach the token in the headers for authentication
         },

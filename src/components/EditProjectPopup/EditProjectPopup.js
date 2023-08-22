@@ -100,7 +100,7 @@ const EditProjectPopup = ({
     }
 
     axios
-      .put(`http://localhost:8080/api/user/edit-project/`, updatedProjectInfo, {
+      .put(`${process.env.REACT_APP_API_BASE_URL}/api/user/edit-project/`, updatedProjectInfo, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

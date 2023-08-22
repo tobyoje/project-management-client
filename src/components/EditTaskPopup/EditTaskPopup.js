@@ -74,7 +74,7 @@ const EditTaskPopup = ({
 
   useEffect(() => {
     axios
-      .get(`http://localhost:8080/api/user/task/${taskId}`, {
+      .get(`${process.env.REACT_APP_API_BASE_URL}/api/user/task/${taskId}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -139,7 +139,7 @@ const EditTaskPopup = ({
     console.log(updatedTaskInfo);
 
     axios
-      .put(`http://localhost:8080/api/user/edit-task/`, updatedTaskInfo, {
+      .put(`${process.env.REACT_APP_API_BASE_URL}/api/user/edit-task/`, updatedTaskInfo, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

@@ -88,7 +88,7 @@ const AddProject = () => {
     const token = sessionStorage.getItem("token");
 
     axios
-      .post(`http://localhost:8080/api/user/add-project`, newProjectInfo, {
+      .post(`${process.env.REACT_APP_API_BASE_URL}/api/user/add-project`, newProjectInfo, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -111,7 +111,7 @@ const AddProject = () => {
     }
 
     axios
-      .get(`http://localhost:8080/api/user/${userId}`, {
+      .get(`${process.env.REACT_APP_API_BASE_URL}/api/user/${userId}`, {
         headers: {
           Authorization: `Bearer ${token}`, // Attach the token in the headers for authentication
         },

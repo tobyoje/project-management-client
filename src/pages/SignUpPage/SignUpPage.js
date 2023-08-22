@@ -108,7 +108,10 @@ const SignUpPage = () => {
     console.log(newAccount);
 
     axios
-      .post(`http://localhost:8080/api/user/register`, newAccount)
+      .post(
+        `${process.env.REACT_APP_API_BASE_URL}/api/user/register`,
+        newAccount
+      )
       .then((response) => {
         console.log(response.data);
         navigate("/login");

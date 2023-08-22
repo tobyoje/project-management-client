@@ -53,7 +53,7 @@ const ProjectPage = () => {
           navigate("/login");
         } else {
           const response = await axios.get(
-            `http://localhost:8080/api/user/${userId}`,
+            `${process.env.REACT_APP_API_BASE_URL}/api/user/${userId}`,
             {
               headers: {
                 Authorization: `Bearer ${token}`,
