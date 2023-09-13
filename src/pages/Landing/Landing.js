@@ -1,22 +1,64 @@
+import LandingHeader from "../../components/LandingHeader/LandingHeader";
+import heroIMG from "../../assets/images/transparent-shot.png";
+import featuresIMG from "../../assets/images/project-management.jpg";
+
 import "./Landing.scss";
 
 const Landing = () => {
   return (
     <>
-      <div className="landing">
-        <h1 className="landing__title"> A simple Project Management App</h1>
-        <p className="landing__description">
-          Elevate your project management experience with our user-friendly app.
-          From organizing tasks to tracking project progress, our tool helps you
-          stay in control and manage your projects with ease.
-        </p>
-        <div className="landing__button-area">
-          <a href="/login">
-            <button className="landing__left-button">Login</button>
-          </a>
-          <a href="/register">
-            <button className="landing__right-button">Register</button>
-          </a>
+      <div>
+        <LandingHeader />
+        <div className="landing">
+          <div className="landing__hero">
+            <div className="landing__left">
+              <h1 className="landing__title">
+                Elevate your Project Management Experience with
+                <span style={{ color: "#006cff" }}> ProjectNest</span>
+              </h1>
+              <p className="landing__description">
+                Streamline your projects with our intuitive project management
+                app. From organizing tasks to tracking project progress, our
+                tool helps you stay in control and manage your projects with
+                ease.
+              </p>
+              <div className="landing__button-area">
+                <a
+                  className="landing__button landing__hero-button"
+                  href="/login"
+                >
+                  Get Started
+                </a>
+              </div>
+            </div>
+
+            <div className="landing__right">
+              <img
+                className="landing__hero-image"
+                src={heroIMG}
+                alt="Hero Image"
+              />
+            </div>
+          </div>
+
+          <div className="landing__features">
+            <div>
+              <img
+                className="landing__features--image"
+                src={featuresIMG}
+                alt="Features Image"
+              />
+            </div>
+            <div className="landing__features-text">
+              <ul>
+                <li>Add Projects</li>
+                <li>Add Tasks</li>
+                <li>Assign Priorities</li>
+                <li>Edit tasks</li>
+                <li>Set task category</li>
+              </ul>
+            </div>
+          </div>
         </div>
       </div>
     </>

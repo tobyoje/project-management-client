@@ -16,9 +16,14 @@ function App() {
   return (
     <div className="app">
       <BrowserRouter>
-        <div className="app__divide">
           <Routes>
             <Route path="/" element={<Landing />} />
+            </Routes>
+            <div className="app__divide">
+
+
+            <Routes>
+
             <Route path="/project/:projectId" element={<ProjectPage />} />
             <Route path="projects" element={<ProjectListPage />} />
             <Route path="new-project" element={<AddProject />} />
